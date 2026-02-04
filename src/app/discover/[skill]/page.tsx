@@ -3,21 +3,22 @@ import { ReactNode } from "react";
 import devImage from "../../../../public/images/development.jpg";
 import SkillProvider from "@/components/skillProvider/SkillProvider";
 import ShowProviders from "@/components/showProviders/ShowProviders";
-type Props = {
-  params: {
-    skill: string;
-  };
-};
+
+import { use } from "react";
 import { notFound } from "next/navigation";
 import { skillConfig } from "../[skill]/data";
 
-function SkillPage({ params }: { params: { skill: string } }) {
-  const skill = skillConfig[params.skill];
+function SkillPage({
+  params,
+}: {
+  params: Promise<{ skill: string }>;
+}): ReactNode {
+  const { skill } = use(params);
+  const skillInfo = skillConfig[skill];
 
-  if (!skill) notFound();
+  if (!skillInfo) notFound();
 
-  const SkillComponent = skill.component;
-
+  const SkillComponent = skillInfo.component;
   return <SkillComponent />;
 }
 

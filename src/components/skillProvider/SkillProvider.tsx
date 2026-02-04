@@ -1,39 +1,92 @@
-import { ReactNode } from "react";
+"use client";
+import { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import devImage from "../../../public/images/2148514859.jpg";
 import ReadMoreText from "../ReadText/ReadText";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
-function SkillProvider(): ReactNode {
+import axios from "axios";
+import { Skill } from "../../../.next/dev/types/skillData.types";
+import Link from "next/link";
+import { useAuth } from "@/context/authContext";
+import { createChatRoomApi } from "@/lib/chatRoom.axios";
+import { toast } from "sonner";
+import { ChatRoom } from "../../../.next/dev/types/chatRoom.types";
+import { Provider } from "@radix-ui/react-tooltip";
+import { useRouter } from "next/navigation";
+
+function SkillProvider({ skill }: { skill: Skill }): ReactNode {
+  if (!skill.userId) return null;
+  const { user } = useAuth();
+  const router = useRouter();
+  const [chatRoom, setChatRoom] = useState<ChatRoom>({
+    participants: [user?._id!, skill.userId._id],
+  });
+  const [loading, setLoading] = useState<Boolean>(false);
+  const handleCreateChatRoom = async () => {
+    try {
+      const res = await createChatRoomApi.post("/createChatRoom", {
+        providerId: skill.userId._id,
+      });
+      setChatRoom(res.data.createRoom);
+      toast.success(res.data.message);
+      router.push("/chat");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("STATUS:", err.response?.status);
+        console.log("DATA:", err.response?.data);
+        toast.error(err.response?.data.message);
+        console.log(chatRoom);
+
+        console.log("HEADERS:", err.response?.headers);
+      } else {
+        console.log("UNEXPECTED:", err);
+        toast.error("Something went wrong please try again later");
+      }
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <div className=" flex flex-col items-center self-start p-3 border h-105 xl:h-118 rounded-xl m-5 w-87 xl:w-100 hover:shadow-lg duration-200 hover:bg-gray-200 cursor-pointer hover:scale-105 select-none">
-      <div className="w-64 xl:w-full overflow-hidden rounded-xl">
-        <Image src={devImage} alt="Skill Provider" className="w-full h-full" />
-      </div>
-      <div className="flex flex-col h-32 items-start w-full px-4 py-3 gap-3">
-        <h4 className="text-sm font-bold">
-          Comprehensive AI Engineering Track: From Foundations to
-          Production-Ready Systems
-        </h4>
-        <div className="flex flex-row">
-          <p className="text-[10px] font-medium">By John Doe</p>
-          <span className="text-[10px] font-medium mx-2">|</span>
-          <p className="text-[10px] font-medium">4.8 ⭐ (1.2k Reviews)</p>
-        </div>
-        <ReadMoreText
-          text="I’m [Instructor Name], an AI Engineer with hands-on experience in
-          building and deploying real-world AI solutions. In this track, I’ll
-          guide you through the complete AI engineering workflow—starting with
-          data preparation and model fundamentals, moving into training and
-          evaluation, and ending with deploying AI models into scalable,
-          production-ready applications using modern tools and best practices."
+    <div className=" flex flex-col items-center self-start p-3 border rounded-xl m-5 w-87 xl:w-100 hover:shadow-lg duration-200 hover:bg-gray-200 cursor-pointer hover:scale-105 select-none justify-between">
+      <div className="w-64 xl:w-full overflow-hidden rounded-xl h-60 shrink-0 mb-5">
+        <Image
+          width={500}
+          height={500}
+          src={(skill.image as string) ?? devImage}
+          alt="Skill Provider"
+          className="w-full h-full object-cover"
+          loading="eager"
         />
+      </div>
+      <div className="flex flex-col w-full px-4">
+        <h4 className="text-sm font-bold line-clamp-2">{skill.skill}</h4>
+        <div className="flex flex-col h-full items-start w-full py-3 gap-3 justify-between">
+          <div className="flex flex-row w-full items-center">
+            <p className="text-[10px] font-medium line-clamp-3">
+              by:{" "}
+              <Link
+                className="hover:underline"
+                href={
+                  user?._id !== skill.userId._id
+                    ? `/profile/${skill.userId._id}`
+                    : `/profile`
+                }
+              >
+                <strong className="text-[12px] hover:underline">
+                  {skill.userId.username}
+                </strong>
+              </Link>
+            </p>
+            <span className="text-[10px] font-medium mx-2">|</span>
+            <p className="text-[10px] font-medium">4.8 ⭐ (1.2k Reviews)</p>
+          </div>
+          <ReadMoreText
+            title="Contact"
+            text={skill.description}
+            onClick={handleCreateChatRoom}
+          />
+        </div>
       </div>
     </div>
   );

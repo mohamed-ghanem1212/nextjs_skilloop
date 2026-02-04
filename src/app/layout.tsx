@@ -7,6 +7,8 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import NavRes from "@/components/responsiveNav/NavRes";
 import { useState } from "react";
+import { AuthProvider } from "@/context/authContext";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,12 +37,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Pass the state and setter to NavRes */}
-        <NavRes isOpen={navOpen} setIsOpened={setNavOpen} />
-        <NavBar isOpen={navOpen} setIsOpened={setNavOpen} />
+        <AuthProvider>
+          {/* Pass the state and setter to NavRes */}
+          <NavRes isOpen={navOpen} setIsOpened={setNavOpen} />
+          <NavBar isOpen={navOpen} setIsOpened={setNavOpen} />
 
-        {children}
-        <Footer />
+          <Toaster position="top-center" />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

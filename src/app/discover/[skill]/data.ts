@@ -3,9 +3,9 @@ import Creativity from "./Creativity";
 import Marketing from "./Marketing";
 import Business from "./Business";
 import OtherSkills from "./OtherSkills";
-import { JSX } from "react";
+import { JSX, ReactNode } from "react";
 
-export const skillConfig: Record<string, { component: () => JSX.Element }> = {
+export const skillConfig: Record<string, { component: () => ReactNode }> = {
   development: {
     component: Development,
   },

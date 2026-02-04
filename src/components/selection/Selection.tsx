@@ -7,12 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-type Key = {
+import { ChangeEvent } from "react";
+import { SkillLvl } from "../../../.next/dev/types/user.types";
+import { SECTION } from "../../../.next/dev/types/skillData.types";
+type SelectOption<T extends string> = {
   label: string;
-  value: string;
+  value: T;
 };
-type SelectSectionProps = {
-  values: Key[];
+type SelectSectionProps<T extends string> = {
+  values: readonly SelectOption<T>[];
+  value: T;
+  onChange: (value: T) => void;
 };
 export const lvl = [
   { label: "Beginner", value: "beginner" },
@@ -26,17 +31,22 @@ export const sections = [
   { label: "Business", value: "business" },
   { label: "Other", value: "other" },
 ];
-export function SelectSection({ values }: SelectSectionProps) {
+export function SelectSection<T extends string>({
+  values,
+  value,
+  onChange,
+}: SelectSectionProps<T>) {
   return (
-    <Select>
-      <SelectTrigger className="w-96">
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className="w-full">
         <SelectValue placeholder="Select your choice" />
       </SelectTrigger>
+
       <SelectContent>
         <SelectGroup>
-          {values.map((value) => (
-            <SelectItem value={value.value} key={value.value}>
-              {value.label}
+          {values.map((item) => (
+            <SelectItem key={item.value} value={item.label}>
+              {item.label}
             </SelectItem>
           ))}
         </SelectGroup>

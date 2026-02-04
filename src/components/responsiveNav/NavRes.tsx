@@ -21,7 +21,7 @@ function NavRes({ isOpen, setIsOpened }: NavResProps): ReactNode {
       >
         <X />
       </div>
-      <div className="flex flex-col gap-24 text-xl text-center items-center py-40 font-bold">
+      <div className="flex flex-col gap-15 text-xl text-center items-center py-30 font-bold">
         <Link
           href={"/home"}
           className="hover:text-blue-700 duration-200 cursor-pointer"
@@ -49,6 +49,20 @@ function NavRes({ isOpen, setIsOpened }: NavResProps): ReactNode {
           onClick={() => setIsOpened(false)}
         >
           Contact
+        </Link>
+        <Link
+          href={"/profile"}
+          className="hover:text-blue-700 duration-200 cursor-pointer"
+          onClick={() => setIsOpened(false)}
+        >
+          User Profile
+        </Link>
+        <Link
+          href={"/chat"}
+          className="hover:text-blue-700 duration-200 cursor-pointer"
+          onClick={() => setIsOpened(false)}
+        >
+          Chat Room
         </Link>
         <Link
           href={"/auth"}

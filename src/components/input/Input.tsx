@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode, ChangeEvent } from "react";
 type inputProps = {
   label: string;
   inputType: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
-function Input({ label, inputType }: inputProps): ReactNode {
+function Input({ label, inputType, onChange }: inputProps): ReactNode {
   return (
     <div className="relative">
       <input
@@ -12,6 +13,7 @@ function Input({ label, inputType }: inputProps): ReactNode {
         className="peer w-96 rounded-xl border border-gray-300 bg-transparent focus:border-black focus:border-2 p-4
              placeholder-opacity-0
              focus:outline-none"
+        onChange={onChange}
       />
       <label
         className="absolute left-7 top-1/2 -translate-y-1/2

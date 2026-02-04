@@ -7,9 +7,22 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import CreateRegister from "../OfferRegister/OfferRegister";
 import { Button } from "../ui/button";
-export default function ReadMoreText({ text }: { text: string }) {
+export default function ReadMoreText({
+  text,
+  title,
+  offerId,
+  onClick,
+}: {
+  text: string;
+  title: string;
+  offerId?: string;
+  skillId?: string;
+  onClick?: () => void;
+}) {
   const [open, setOpen] = useState<boolean>(false);
+  console.log(offerId);
 
   return (
     <div className="relative w-full">
@@ -25,9 +38,16 @@ export default function ReadMoreText({ text }: { text: string }) {
           </HoverCardTrigger>
           <HoverCardContent className="font-bold">{text}</HoverCardContent>
         </HoverCard>
-        <Button className="bg-blue-700 rounded-full text-white hover:bg-blue-900 duration-150 cursor-pointer">
-          Contact
-        </Button>
+        {title == "Register" ? (
+          <CreateRegister title={title} offerId={offerId!} />
+        ) : (
+          <Button
+            className="bg-blue-700 rounded-full text-white hover:bg-blue-900 duration-150 cursor-pointer"
+            onClick={onClick}
+          >
+            {title}
+          </Button>
+        )}
       </div>
     </div>
   );

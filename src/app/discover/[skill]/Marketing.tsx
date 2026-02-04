@@ -1,4 +1,42 @@
-function Marketing() {
-  return <div>Marketing</div>;
+import ShowProviders from "@/components/showProviders/ShowProviders";
+import Image from "next/image";
+import marImage from "../../../../public/images/marketing.jpg";
+import { ReactNode } from "react";
+function Marketing(): ReactNode {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="bg-blue-900 flex flex-col lg:flex-row justify-between items-center gap-6 w-full">
+        <div className="w-200 flex flex-col gap-4 px-9">
+          <h2 className="text-3xl font-bold mb-2 text-white text-center">
+            Grow Brands and Reach the Right Audience
+          </h2>
+          <p className="text-center text-white">
+            Learn how ideas turn into impact. This section covers digital
+            marketing, content creation, social media, and growth
+            strategies—giving you the tools to build visibility, drive
+            engagement, and grow brands in today’s digital world.
+          </p>
+        </div>
+        <div className="w-200 h-full">
+          <Image src={marImage} alt="Development" />
+        </div>
+      </div>
+      <div className="w-200">
+        <h3 className="text-2xl font-bold mt-10 mb-6 text-center">
+          Welcome to the Experts Behind the Section
+        </h3>
+        <p className="text-center mb-10">
+          Here, experienced developers share their knowledge, guiding you
+          through the intricacies of coding, software design, and technology
+          implementation. Whether you're a beginner or looking to enhance your
+          skills, our providers are here to help you navigate the ever-evolving
+          world of development.
+        </p>
+      </div>
+      <div>
+        <ShowProviders />
+      </div>
+    </div>
+  );
 }
 export default Marketing;

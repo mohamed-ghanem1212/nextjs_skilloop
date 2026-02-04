@@ -26,7 +26,7 @@ function Register(): ReactNode {
           />
         </div>
         <div className="flex flex-col items-center gap-9">
-          <div className="w-sm flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-6">
             <p className="text-xl md:text-[30px] leading-tight xl:text-start text-center">
               Become a provider on{" "}
               <strong className="text-blue-700 font-bold">Skilloop</strong> and
