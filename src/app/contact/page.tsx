@@ -6,21 +6,21 @@ function Contact(): ReactNode {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col xl:flex-row justify-between w-full px-32 py-14 items-center">
-        <div className="flex flex-col w-110 xl:w-100 py-16 items-center xl:items-start">
-          <h1 className="text-7xl font-bold mb-6">Talk to Us!</h1>
+        <div className="flex flex-col w-100 xl:w-100 py-16 items-center xl:items-start">
+          <h1 className="xl:text-7xl text-5xl font-bold mb-6">Talk to Us!</h1>
 
           <p className="text-xl text-center xl:text-start leading-relaxed tracking-wide">
             We help your business grow with smart digital marketing. Let’s chat
             and explore how we can turn your goals into real success.
           </p>
         </div>
-        <div>
+        <div className="w-70 xl:w-full">
           <Image src={contactUs} alt="Contact Us" width={700} height={700} />
         </div>
       </div>
       <div className="flex flex-col xl:flex-row w-full px-32 py-3 justify-between items-center">
         <div className="flex flex-col gap-14">
-          <h2 className="text-4xl font-bold">Write a message</h2>
+          <h2 className="xl:text-4xl text-2xl font-bold">Write a message</h2>
           <div>
             <form className="flex flex-col gap-11 mt-6 items-center">
               <Input label="Your Name" inputType="text" />
@@ -29,7 +29,7 @@ function Contact(): ReactNode {
               <div className="relative">
                 <textarea
                   placeholder=" "
-                  className="peer border border-gray-300 rounded-xl p-4 w-96 bg-transparent h-40 resize-none focus:outline-none focus:border-black focus:border-2"
+                  className="peer border w-80 md:w-96 border-gray-300 rounded-xl p-4 bg-transparent h-40 resize-none focus:outline-none focus:border-black focus:border-2"
                 ></textarea>
                 <label
                   htmlFor=""

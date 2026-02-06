@@ -41,35 +41,37 @@ function ShowSkillOffers(): ReactNode {
     fetchOffers();
   }, []);
   return (
-    <Carousel
-      opts={{
-        align: "start",
-      }}
-      className="w-80 md:w-225 xl:w-360 "
-    >
-      <CarouselContent>
-        {offers.length > 0 ? (
-          offers
-            .filter((offer) => offer.userId !== null)
-            .map((offer: SkillOfferT) => (
-              <CarouselItem
-                key={offer._id}
-                className="md:basis-1/2 lg:basis-1/3"
-              >
-                <div className="flex items-center justify-center w-full">
-                  <SkillOffer offer={offer} />
-                </div>
-              </CarouselItem>
-            ))
-        ) : (
-          <div className="h-full w-full text-center">
-            <p>No Offers shown</p>{" "}
-          </div>
-        )}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <div className="flex justify-center w-full">
+      <Carousel
+        opts={{
+          align: "center",
+        }}
+        className="w-full max-w-sm md:max-w-3xl lg:max-w-5xl xl:max-w-7xl"
+      >
+        <CarouselContent>
+          {offers.length > 0 ? (
+            offers
+              .filter((offer) => offer.userId !== null)
+              .map((offer: SkillOfferT) => (
+                <CarouselItem
+                  key={offer._id}
+                  className="md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="flex items-center justify-center w-full">
+                    <SkillOffer offer={offer} />
+                  </div>
+                </CarouselItem>
+              ))
+          ) : (
+            <div className="h-full w-full text-center">
+              <p>No Offers shown</p>{" "}
+            </div>
+          )}
+        </CarouselContent>
+        <CarouselPrevious className="xl:flex hidden" />
+        <CarouselNext className="xl:flex hidden" />
+      </Carousel>
+    </div>
   );
 }
 export default ShowSkillOffers;

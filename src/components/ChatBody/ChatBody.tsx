@@ -48,10 +48,6 @@ function ChatBody({
     };
   }, [socket]);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
   const sendMessage = () => {
     if (!socket || !socket.connected) {
       console.log("❌ Socket not connected");
@@ -124,7 +120,7 @@ function ChatBody({
           <Camera className="cursor-pointer hover:text-black duration-200" />
         </div>
 
-        <div className="h-20 w-full px-3 bg-gray-50 flex items-center gap-4">
+        <div className="h-20 w-full px-3 bg-gray-50 flex items-center gap-4 justify-center">
           <Textarea
             value={text}
             placeholder={
@@ -133,8 +129,11 @@ function ChatBody({
                 : "Type your message here..."
             }
             className="
-              w-full
+              w-60
+              sm:w-full
               resize-none
+              overflow-y-auto
+              h-12
               rounded-[250px]
               border
               border-gray-200

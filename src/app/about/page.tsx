@@ -5,7 +5,7 @@ function About(): ReactNode {
   return (
     <div className="flex lg:flex-row flex-col lg:px-30 px-16 py-20 justify-between items-center gap-12 lg:gap-40">
       <div className="flex flex-col items-center gap-24 lg:w-[60%] w-full h-full">
-        <h1 className="md:text-7xl text-4xl font-bold">Our Journey so far</h1>
+        <h1 className="md:text-7xl text-3xl font-bold">Our Journey so far</h1>
         <div className="h-full rounded-[40px] overflow-hidden">
           <Image src={abt} alt="" className="object-fit w-full h-full" />
         </div>

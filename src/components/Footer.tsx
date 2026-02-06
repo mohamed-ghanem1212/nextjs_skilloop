@@ -33,15 +33,18 @@ function Footer(): ReactNode {
               Home
             </Link>
             <Link
-              href={"discover"}
+              href={"/discover"}
               className="hover:text-blue-700 duration-200"
             >
               Discover
             </Link>
-            <Link href={"About"} className="hover:text-blue-700 duration-200">
+            <Link href={"/about"} className="hover:text-blue-700 duration-200">
               About Us
             </Link>
-            <Link href={"contact"} className="hover:text-blue-700 duration-200">
+            <Link
+              href={"/contact"}
+              className="hover:text-blue-700 duration-200"
+            >
               Contact
             </Link>
           </div>
@@ -49,10 +52,16 @@ function Footer(): ReactNode {
         <div>
           <h1 className="text-2xl font-bold">Get in touch</h1>
           <div className="flex flex-col gap-1 mt-4">
-            <Link href={"contact"} className="hover:text-blue-700 duration-200">
+            <Link
+              href={"/contact"}
+              className="hover:text-blue-700 duration-200"
+            >
               <h5>+1-123-4567-2345</h5>
             </Link>
-            <Link href={"contact"} className="hover:text-blue-700 duration-200">
+            <Link
+              href={"/contact"}
+              className="hover:text-blue-700 duration-200"
+            >
               <h5>skilloop@gmail.com</h5>
             </Link>
           </div>

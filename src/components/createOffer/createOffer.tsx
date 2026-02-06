@@ -143,6 +143,7 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
       <div className="grid gap-3">
         <Label htmlFor="email">Description</Label>
         <Textarea
+          className="resize-none overflow-y-auto h-18"
           id="descrip"
           defaultValue=""
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>

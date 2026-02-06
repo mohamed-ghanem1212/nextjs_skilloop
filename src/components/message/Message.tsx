@@ -1,87 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MessageData } from "../../../.next/dev/types/message";
 
-// export const message = [
-//   {
-//     id: "1",
-//     text: "Hey 👋",
-//     senderId: "1",
-//     createdAt: "2026-01-06T12:00:00Z",
-//   },
-//   {
-//     id: "2",
-//     text: "Hi! How are you?",
-//     senderId: "1",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "3",
-//     text: "Hi! How are you?",
-//     senderId: "3",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "7",
-//     text: "Hey 👋",
-//     senderId: "5",
-//     createdAt: "2026-01-06T12:00:00Z",
-//   },
-//   {
-//     id: "8",
-//     text: "Hi! How are you?",
-//     senderId: "8",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "9",
-//     text: "Hi! How are you?",
-//     senderId: "6",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "11",
-//     text: "Hi! How are you?",
-//     senderId: "11",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "12",
-//     text: "Hi! How are you?",
-//     senderId: "12",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "13",
-//     text: "Hey",
-//     senderId: "13",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "16",
-//     text: "Hi! How are you?",
-//     senderId: "12",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "17",
-//     text: "Hi! How are you?",
-//     senderId: "13",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "18",
-//     text: "Hi! How are you?",
-//     senderId: "12",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-//   {
-//     id: "19",
-//     text: "Hi! How are you?",
-//     senderId: "13",
-//     createdAt: "2026-01-06T12:01:00Z",
-//   },
-// ];
-
 function MessageBubble({
   messages,
   isMe,
@@ -92,36 +11,55 @@ function MessageBubble({
   console.log(messages.senderId);
 
   return (
-    <div className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
-      <div
-        className="flex flex-row justify-between
-      "
-      >
-        <div className="order-2 flex items-end">
-          <Avatar>
-            <div className="w-9">
+    <div
+      className={`flex w-full px-2 sm:px-4 ${isMe ? "justify-end" : "justify-start"}`}
+    >
+      <div className="flex flex-row items-end max-w-[85%] sm:max-w-[75%] md:max-w-[60%] lg:max-w-[50%]">
+        {!isMe && (
+          <div className="shrink-0 mr-2">
+            <Avatar className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9">
               <AvatarImage
                 src={messages.senderId.profilePicture}
                 alt=""
                 className="w-full h-full object-cover"
               />
-            </div>
-          </Avatar>
-        </div>
+              <AvatarFallback className="text-xs">
+                {messages.senderId.username?.[0]?.toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
+          </div>
+        )}
+
         <div
           className={`
-            w-fit rounded-2xl px-4 py-2 text-sm
+            w-fit max-w-full rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm wrap-break-word
             ${
               isMe
-                ? "bg-blue-600 text-white rounded-br-none order-1 mr-2"
-                : "bg-gray-200 text-gray-900 rounded-bl-none order-2 ml-2"
+                ? "bg-blue-600 text-white rounded-br-none"
+                : "bg-gray-200 text-gray-900 rounded-bl-none"
             }
-            `}
+          `}
         >
           {messages.text}
         </div>
+
+        {isMe && (
+          <div className="shrink-0 ml-2">
+            <Avatar className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9">
+              <AvatarImage
+                src={messages.senderId.profilePicture}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+              <AvatarFallback className="text-xs">
+                {messages.senderId.username?.[0]?.toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
 export default MessageBubble;

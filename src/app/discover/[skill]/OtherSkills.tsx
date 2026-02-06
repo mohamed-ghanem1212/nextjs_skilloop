@@ -2,6 +2,7 @@ import ShowProviders from "@/components/showProviders/ShowProviders";
 import Image from "next/image";
 import { ReactNode } from "react";
 import Other from "../../../../public/images/skill.jpg";
+import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
 function OtherSkills(): ReactNode {
   return (
     <div className="flex flex-col items-center">
@@ -33,8 +34,16 @@ function OtherSkills(): ReactNode {
           world of development.
         </p>
       </div>
-      <div>
-        <ShowProviders />
+      <div className="flex flex-col items-center w-full px-6">
+        <div className="space-y-3 w-full max-w-7xl">
+          <h1 className="font-bold text-xl">Choose Your Learning Provider</h1>
+          <ShowProviders />
+        </div>
+        <div className="h-0.5 w-[70%] max-w-4xl bg-gray-200 m-10"></div>
+        <div className="space-y-3 w-full max-w-7xl">
+          <h1 className="font-bold text-xl">Available Skill Requests</h1>
+          <ShowSkillOffers />
+        </div>
       </div>
     </div>
   );

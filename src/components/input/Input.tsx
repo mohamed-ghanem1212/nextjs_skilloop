@@ -10,7 +10,7 @@ function Input({ label, inputType, onChange }: inputProps): ReactNode {
       <input
         type={inputType}
         placeholder=" "
-        className="peer w-96 rounded-xl border border-gray-300 bg-transparent focus:border-black focus:border-2 p-4
+        className="peer w-80 md:w-96 rounded-xl border border-gray-300 bg-transparent focus:border-black focus:border-2 p-4
              placeholder-opacity-0
              focus:outline-none"
         onChange={onChange}

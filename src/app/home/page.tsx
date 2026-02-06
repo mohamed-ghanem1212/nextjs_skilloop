@@ -11,11 +11,12 @@ import Icon from "@/components/icon";
 import bg from "../../../public/images/9963615.jpg";
 import { LanguageSkillIcon, Link06Icon, TradeUpIcon } from "hugeicons-react";
 import Card from "@/components/card";
+import Link from "next/link";
 
 function page(): ReactNode {
   return (
     <div>
-      <div className="flex flex-col xl:flex-row  gap-5 md:gap-0 justify-between p-20 w-full items-center">
+      <div className="flex flex-col xl:flex-row gap-5 md:gap-0 justify-between p-7 xl:p-20 w-full items-center">
         <div className="hidden xl:block ">
           <Image
             src={share}
@@ -43,7 +44,9 @@ function page(): ReactNode {
             need them.
           </p>
           <div className="flex flex-col xl:flex-row gap-7 mt-14 items-center">
-            <Button name="Explore" />
+            <Link href="/discover">
+              <Button name="Explore" />
+            </Link>
             <p className="text-gray-600 text-center xl:text-start text-[15px] md:text-[18px]">
               Publish your services and skills in design, development,
               marketing, and more.
@@ -51,7 +54,7 @@ function page(): ReactNode {
           </div>
         </div>
       </div>
-      <div className="flex flex-col xl:flex-row gap-12 px-28 mb-20">
+      <div className="flex flex-col xl:flex-row gap-12 px-10 xl:px-28 mb-20">
         <Icon
           icon={LanguageSkillIcon}
           description="Create offers, share your expertise, and teach others through structured learning or services."
@@ -65,9 +68,9 @@ function page(): ReactNode {
           description="Grow your audience, gain trust, and scale your impact through reviews and visibility."
         />
       </div>
-      <div className="flex flex-col xl:flex-row gap-5 lg:gap-0 lg:justify-between p-20 w-full bg-gray-200 items-center">
+      <div className="flex flex-col xl:flex-row gap-5 lg:gap-0 lg:justify-between p-10 xl:p-20 w-full bg-gray-200 items-center">
         <div className="flex flex-col xl:items-start items-center xl:w-[50%] text-center lg:text-start">
-          <h1 className="xl:text-4xl text-3xl text-blue-700 font-bold mb-6">
+          <h1 className="xl:text-4xl text-2xl text-blue-700 font-bold mb-6">
             Turn Skills Into Real Opportunities
           </h1>
           <div className="xl:hidden mb-5 overflow-hidden">
@@ -83,7 +86,9 @@ function page(): ReactNode {
             Discover services, offers, and talents in one place.
           </p>
           <div className="flex flex-col xl:flex-row gap-7 mt-14 items-center">
-            <Button name="Discover" />
+            <Link href="/discover">
+              <Button name="Discover" />
+            </Link>
             <p className="text-gray-600 text-center xl:text-start text-[15px] xl:text-[18px]">
               Search for design, development, marketing…
             </p>
@@ -99,8 +104,8 @@ function page(): ReactNode {
           />
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4 my-28 ">
-        <h1 className="md:text-4xl text-3xl font-bold text-center">
+      <div className="flex flex-col items-center gap-4 my-28 xl:px-0">
+        <h1 className="md:text-4xl text-2xl font-bold text-center">
           See What Our Community Says About Skilloop
         </h1>
         <p className="md:text-2xl text-center">
@@ -136,7 +141,7 @@ function page(): ReactNode {
             />
           </div>
         </div>
-        <div className="bg-linear-to-r from-indigo-200 from-10% via-sky-200 via-30% to-emerald-200 to-90% w-full p-24">
+        <div className="bg-linear-to-r from-indigo-200 from-10% via-sky-200 via-30% to-emerald-200 to-90% xl:p-24 p-9 w-full">
           <div className="bg-black rounded-4xl p-8 md:p-12 flex flex-col lg:flex-row justify-between items-center">
             <div className="flex flex-col gap-5 py-6 px-1">
               <h2 className=" text-white text-2xl text-center lg:text-start md:text-4xl font-bold ">
@@ -146,11 +151,13 @@ function page(): ReactNode {
                 We help individuals and teams share knowledge and grow together.
               </p>
             </div>
-            <Button
-              name="Contact Us"
-              bgColor="bg-white"
-              textColor="text-black"
-            />
+            <Link href="/contact">
+              <Button
+                name="Contact Us"
+                bgColor="bg-white"
+                textColor="text-black"
+              />
+            </Link>
           </div>
         </div>
       </div>

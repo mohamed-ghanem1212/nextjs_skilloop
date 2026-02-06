@@ -1,14 +1,41 @@
 "use client";
 
+import { useAuth } from "@/context/authContext";
+import { createUserApi } from "@/lib/user.axios";
+import axios from "axios";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
+import { toast } from "sonner";
 
 type NavResProps = {
   isOpen: boolean;
   setIsOpened: (open: boolean) => void;
 };
 function NavRes({ isOpen, setIsOpened }: NavResProps): ReactNode {
+  const { user, setUser } = useAuth();
+  const handleLogOutUser = async () => {
+    try {
+      if (!user) {
+        return;
+      }
+      const res = await createUserApi.post("/logOut");
+      console.log(res.data);
+
+      setUser(null);
+      toast.success(res.data.message);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("STATUS:", err.response?.status);
+        console.log("DATA:", err.response?.data);
+        console.log("HEADERS:", err.response?.headers);
+        toast.success(err.response?.data.message);
+      } else {
+        console.log("UNEXPECTED:", err);
+      }
+    }
+  };
+
   return (
     <div
       className={`fixed inset-0 ${
@@ -52,24 +79,24 @@ function NavRes({ isOpen, setIsOpened }: NavResProps): ReactNode {
         </Link>
         <Link
           href={"/profile"}
-          className="hover:text-blue-700 duration-200 cursor-pointer"
+          className={`hover:text-blue-700 duration-200 cursor-pointer ${user ? "" : "hidden"}`}
           onClick={() => setIsOpened(false)}
         >
           User Profile
         </Link>
         <Link
           href={"/chat"}
-          className="hover:text-blue-700 duration-200 cursor-pointer"
+          className={`hover:text-blue-700 duration-200 cursor-pointer ${user ? "" : "hidden"}`}
           onClick={() => setIsOpened(false)}
         >
           Chat Room
         </Link>
         <Link
+          onClick={handleLogOutUser}
           href={"/auth"}
-          className="hover:text-blue-700 duration-200 cursor-pointer"
-          onClick={() => setIsOpened(false)}
+          className={`hover:text-blue-700 duration-200`}
         >
-          Register
+          {user ? "Log out" : "Register"}
         </Link>
       </div>
     </div>

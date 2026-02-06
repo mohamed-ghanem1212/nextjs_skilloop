@@ -44,12 +44,12 @@ function CreateSkill() {
               Create Skill
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>Post your skill</DialogTitle>
               <DialogDescription>
-                Share your expertise and let learners connect with you. Descr
-                ibe the skill, your experience level, and what you can teach.
+                Share your expertise and let learners connect with you. Describe
+                the skill, your experience level, and what you can teach.
               </DialogDescription>
             </DialogHeader>
             <OfferForm
@@ -66,12 +66,12 @@ function CreateSkill() {
       <div className="block md:hidden">
         <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
           <DrawerTrigger asChild>
-            <Button className="bg-gray-800 text-white cursor-pointer hover:bg-gray-400 hover:text-white duration-150">
+            <Button className="bg-gray-800 text-white cursor-pointer hover:bg-gray-400 hover:text-white duration-150 w-full sm:w-auto">
               Create Skill
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="p-10">
-            <DrawerHeader>
+          <DrawerContent className="px-4 sm:px-6 pb-8">
+            <DrawerHeader className="px-0">
               <DrawerTitle>Post your skill</DrawerTitle>
               <DrawerDescription>
                 Share your expertise and let learners connect with you. Describe
@@ -92,14 +92,17 @@ function CreateSkill() {
 }
 
 export default CreateSkill;
+
 type OfferFormProps = React.ComponentProps<"form"> & {
   closeForm: () => void;
 };
+
 function OfferForm({ className, closeForm }: OfferFormProps) {
   const [file, setFile] = React.useState<File | null>(null);
   const [preview, setPreview] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState<Boolean>(false);
   const [skill, setSkill] = React.useState<Skill>();
+
   const handleCreateSkill = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = new FormData();
@@ -132,6 +135,7 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
       }
     }
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
@@ -144,49 +148,57 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
     };
     reader.readAsDataURL(selectedFile);
   };
+
   return (
-    <form className={cn("grid items-start gap-6", className)}>
-      <div className="grid gap-3">
-        <Label>Skill</Label>
+    <form className={cn("grid items-start gap-3 sm:gap-4 w-full", className)}>
+      <div className="grid gap-2">
+        <Label htmlFor="skill">Skill</Label>
         <Input
           type="text"
           id="skill"
-          defaultValue="..."
+          placeholder="Enter your skill..."
+          className="w-full"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setSkill({ ...skill!, skill: e.target.value })
           }
         />
       </div>
-      <div className="grid gap-3">
-        <Label>Level</Label>
+
+      <div className="grid gap-2">
+        <Label htmlFor="level">Level</Label>
         <SelectSection
           values={lvl}
           value={skill?.level!}
           onChange={(value: any) => setSkill({ ...skill!, level: value })}
         />
       </div>
-      <div className="grid gap-3">
-        <Label htmlFor="email">Description</Label>
+
+      <div className="grid gap-2">
+        <Label htmlFor="description">Description</Label>
         <Textarea
+          className="resize-none overflow-y-auto h-20 w-full"
           id="description"
-          defaultValue=""
+          placeholder="Describe your skill and what you can teach..."
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setSkill({ ...skill!, description: e.target.value })
           }
         />
       </div>
-      <div className="grid gap-3">
-        <Label>Select your section</Label>
+
+      <div className="grid gap-2">
+        <Label htmlFor="section">Select your section</Label>
         <SelectSection
           values={sections}
           value={skill?.section!}
           onChange={(value: any) => setSkill({ ...skill!, section: value })}
         />
       </div>
-      <div className="w-full text-center my-4 flex flex-col items-center gap-11 overflow-hidden">
-        <strong className="block max-w-full line-clamp-2">
-          {file ? file.name : "upload photo"}
+
+      <div className="w-full flex flex-col items-center gap-3 my-2">
+        <strong className="block w-full text-center line-clamp-1 text-sm px-2">
+          {file ? file.name : "Upload photo"}
         </strong>
+
         <input
           type="file"
           accept="image/*"
@@ -196,17 +208,19 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
         />
         <label
           htmlFor="upload"
-          className="bg-black text-white px-4 py-2 rounded-md cursor-pointer hover:bg-gray-500 text-center w-50 duration-150"
+          className="bg-black text-white px-4 py-2 rounded-md cursor-pointer hover:bg-gray-700 text-center w-full sm:w-auto max-w-xs duration-150 text-sm"
         >
           Upload Photo
         </label>
       </div>
+
       <Button
         type="submit"
-        className="cursor-pointer bg-blue-700 hover:bg-blue-900"
+        className="cursor-pointer bg-blue-700 hover:bg-blue-900 w-full h-10"
         onClick={handleCreateSkill}
+        disabled={loading as boolean}
       >
-        {loading ? <Spinner /> : "create"}
+        {loading ? <Spinner /> : "Create"}
       </Button>
     </form>
   );

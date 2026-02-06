@@ -39,143 +39,77 @@ function ChatRoom(): ReactNode {
   const isMobile = useIsMobile();
   const { user } = useAuth();
 
-  // Keep track of the user ID to detect user changes
-  const previousUserIdRef = useRef<string | null>(null);
+  // Separate effect to always fetch users on mount
+  useEffect(() => {
+    if (!user?._id) return;
 
-  // Effect 1: Socket initialization and user change detection
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const res = await createChatRoomApi.get("/getUsersList");
+        setProviders(res.data.findUsers);
+        console.log("✅ Users loaded:", res.data.findUsers.length);
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          toast.error(err.response?.data.message || "Failed to load users");
+        } else {
+          toast.error("Something went wrong");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, [user?._id]); // Fetch users whenever component mounts or user changes
+
+  // Socket initialization effect
   useEffect(() => {
     if (!user?._id) {
       console.log("⚠️ No user logged in, skipping socket initialization");
-      // Disconnect socket if user logs out
-      if (previousUserIdRef.current) {
-        console.log("🔌 User logged out, disconnecting socket");
-        disconnectSocket();
-        setSocket(null);
-        setIsSocketConnected(false);
-        setMessages([]);
-        setActiveChat(null);
-        setActiveChatUser(null);
-      }
-      previousUserIdRef.current = null;
       return;
     }
 
-    // Detect user change (logout/login with different user)
-    if (previousUserIdRef.current && previousUserIdRef.current !== user._id) {
-      console.log(
-        "🔄 User changed from",
-        previousUserIdRef.current,
-        "to",
-        user._id,
-      );
-      console.log("🔌 Disconnecting old socket for user change...");
+    console.log("🚀 Initializing socket connection for user:", user._id);
+    const socketConnection = connectSocket(user._id);
+    setSocket(socketConnection);
 
-      // Fully disconnect the old socket
-      disconnectSocket();
+    if (socketConnection.connected) {
+      console.log("✅ Socket already connected!");
+      setIsSocketConnected(true);
+    }
 
-      // Small delay to ensure cleanup completes
-      setTimeout(() => {
-        console.log("✨ Creating new socket for new user...");
-        initializeSocket();
-      }, 100);
+    const handleConnect = () => {
+      console.log("✅ Socket connected for user:", user._id);
+      setIsSocketConnected(true);
+    };
 
-      // Clear user-specific state
-      setSocket(null);
+    const handleDisconnect = () => {
+      console.log("🔌 Socket disconnected");
       setIsSocketConnected(false);
-      setMessages([]);
-      setActiveChat(null);
-      setActiveChatUser(null);
+    };
 
-      // Update ref
-      previousUserIdRef.current = user._id;
-      return;
-    }
+    const handleConnectError = (error: Error) => {
+      console.error("❌ Socket connection error:", error);
+      setIsSocketConnected(false);
+      toast.error("Failed to connect to chat server");
+    };
 
-    // First login or same user
-    if (!previousUserIdRef.current) {
-      console.log("🚀 First login, initializing socket for user:", user._id);
-      initializeSocket();
-    }
+    socketConnection.on("connect", handleConnect);
+    socketConnection.on("disconnect", handleDisconnect);
+    socketConnection.on("connect_error", handleConnectError);
 
-    // Update the previous user ID
-    previousUserIdRef.current = user._id;
+    return () => {
+      console.log("🧹 Cleaning up socket listeners...");
+      socketConnection.off("connect", handleConnect);
+      socketConnection.off("disconnect", handleDisconnect);
+      socketConnection.off("connect_error", handleConnectError);
+    };
+  }, [user?._id]);
 
-    function initializeSocket() {
-      console.log("🚀 Initializing socket connection for user:", user?._id);
-
-      // Pass user ID to connectSocket to track user changes
-      const socketConnection = connectSocket(user?._id);
-
-      // Set socket immediately
-      setSocket(socketConnection);
-      console.log("✅ Socket instance created");
-      console.log("🔌 Initial socket.connected:", socketConnection.connected);
-
-      if (socketConnection.connected) {
-        console.log("✅ Socket already connected!");
-        setIsSocketConnected(true);
-      }
-
-      const handleConnect = () => {
-        console.log("✅ Socket connected for user:", user?._id);
-        setIsSocketConnected(true);
-      };
-
-      const handleDisconnect = () => {
-        console.log("🔌 Socket disconnected");
-        setIsSocketConnected(false);
-      };
-
-      const handleConnectError = (error: Error) => {
-        console.error("❌ Socket connection error:", error);
-        setIsSocketConnected(false);
-        toast.error("Failed to connect to chat server");
-      };
-
-      socketConnection.on("connect", handleConnect);
-      socketConnection.on("disconnect", handleDisconnect);
-      socketConnection.on("connect_error", handleConnectError);
-
-      const fetchUsers = async () => {
-        try {
-          setLoading(true);
-          const res = await createChatRoomApi.get("/getUsersList");
-          setProviders(res.data.findUsers);
-          console.log("✅ Users loaded:", res.data.findUsers.length);
-        } catch (err: unknown) {
-          if (axios.isAxiosError(err)) {
-            toast.error(err.response?.data.message || "Failed to load users");
-          } else {
-            toast.error("Something went wrong");
-          }
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchUsers();
-
-      return () => {
-        console.log("🧹 Cleaning up socket listeners...");
-        socketConnection.off("connect", handleConnect);
-        socketConnection.off("disconnect", handleDisconnect);
-        socketConnection.off("connect_error", handleConnectError);
-        console.log("✅ Cleanup complete - socket remains connected");
-      };
-    }
-
-    const cleanup = initializeSocket();
-    return cleanup;
-  }, [user?._id]); // Re-run when user ID changes
-
-  // Effect 2: Active chat management
+  // Active chat management
   useEffect(() => {
     if (!socket || !activeChat) {
-      console.log("⚠️ Socket or activeChat not ready:", {
-        hasSocket: !!socket,
-        isConnected: isSocketConnected,
-        activeChat,
-      });
       return;
     }
 
@@ -188,7 +122,6 @@ function ChatRoom(): ReactNode {
         const response = await createMessageApi.get(
           `/getMessagesByChatRoom/${activeChat}`,
         );
-
         setMessages(response.data.messages);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -201,12 +134,7 @@ function ChatRoom(): ReactNode {
     fetchMessages();
 
     const handleNewMessage = (msg: MessageData) => {
-      setMessages((prev) => {
-        console.log("Previous messages count:", prev.length);
-        const updated = [...prev, msg];
-        console.log("Updated messages count:", updated.length);
-        return updated;
-      });
+      setMessages((prev) => [...prev, msg]);
     };
 
     const handleError = (error: { message: string }) => {
@@ -214,7 +142,6 @@ function ChatRoom(): ReactNode {
       toast.error(error.message);
     };
 
-    console.log("🎧 Adding listeners for:", SOCKET_EVENTS.NEW_MESSAGE);
     socket.on(SOCKET_EVENTS.NEW_MESSAGE, handleNewMessage);
     socket.on(SOCKET_EVENTS.ERROR, handleError);
 
@@ -223,9 +150,9 @@ function ChatRoom(): ReactNode {
       socket.off(SOCKET_EVENTS.NEW_MESSAGE, handleNewMessage);
       socket.off(SOCKET_EVENTS.ERROR, handleError);
     };
-  }, [socket, activeChat, isSocketConnected]);
+  }, [socket, activeChat]);
 
-  // Effect 3: Click outside handler
+  // Click outside handler
   useEffect(() => {
     if (!isOpen || !isMobile) return;
 
@@ -258,12 +185,13 @@ function ChatRoom(): ReactNode {
   };
 
   return (
-    <div className="bg-gray-50">
-      <div className="flex flex-row justify-between relative">
+    <div className="bg-gray-50 min-h-screen w-full">
+      <div className="flex flex-row justify-between relative h-screen">
+        {/* Mobile Sidebar */}
         {isOpen && isMobile && (
           <div
             ref={sidebarRef}
-            className="left-1/2 top-2 -translate-x-1/2 md:block absolute z-20 bg-white shadow-2xl rounded-4xl w-[90%] xl:w-[30%]"
+            className="left-1/2 top-2 -translate-x-1/2 absolute z-20 bg-white shadow-2xl rounded-4xl w-[90%] max-h-[95vh] overflow-y-auto"
           >
             <ChatUsers
               providers={providers}
@@ -273,8 +201,9 @@ function ChatRoom(): ReactNode {
           </div>
         )}
 
-        {!isOpen && !isMobile && (
-          <div className="hidden md:block lg:w-[30%] w-[50%]">
+        {/* Desktop Sidebar */}
+        {!isMobile && (
+          <div className="hidden md:block lg:w-[30%] md:w-[40%] h-full overflow-y-auto border-r border-gray-200">
             <ChatUsers
               providers={providers}
               onClose={() => setIsOpen(false)}
@@ -283,19 +212,19 @@ function ChatRoom(): ReactNode {
           </div>
         )}
 
-        <div className="md:w-[60%] w-full bg-gray-50 items-center flex flex-col">
-          <div
-            className={`shadow-xl w-full rounded-b-4xl ${activeChat ? "block" : "hidden"}`}
-          >
+        {/* Chat Area */}
+        <div className="md:w-[60%] lg:w-[70%] w-full bg-gray-50 flex flex-col h-full">
+          {/* Header */}
+          <div className="shadow-xl w-full rounded-b-4xl bg-white">
             <div className="flex flex-row items-center justify-between w-full p-2">
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center min-w-0 flex-1">
                 <Menu
                   onClick={() => setIsOpen(true)}
-                  className="cursor-pointer hover:bg-gray-300 rounded-full p-2 ml-2 w-9 h-9 md:hidden"
+                  className="cursor-pointer hover:bg-gray-300 rounded-full p-2 ml-2 w-9 h-9 md:hidden shrink-0"
                 />
                 <ChatProfile
-                  name={activeChatUser?.username!}
-                  title={activeChatUser?.title!}
+                  name={activeChatUser?.username || "Select a chat"}
+                  title={activeChatUser?.title || ""}
                   profilePicture={activeChatUser?.profilePicture}
                   width="xl:w-14 w-12"
                   nameSize="xl:text-lg text-[12px]"
@@ -303,20 +232,32 @@ function ChatRoom(): ReactNode {
                   textColor="text-blue-900"
                 />
               </div>
-              <div className="flex flex-row xl:gap-2 gap-1 text-gray-700 items-center">
+              <div className="flex flex-row xl:gap-2 gap-1 text-gray-700 items-center shrink-0">
                 <Search01Icon className="cursor-pointer p-2 hover:bg-gray-300 xl:w-10 xl:h-10 w-8 h-8 rounded-full duration-200" />
                 <FavouriteIcon className="cursor-pointer p-2 hover:bg-gray-300 xl:w-10 xl:h-10 w-8 h-8 rounded-full duration-200" />
                 <Notification01Icon className="cursor-pointer p-2 hover:bg-gray-300 xl:w-10 xl:h-10 w-8 h-8 duration-200 rounded-full" />
               </div>
             </div>
           </div>
-          <div className="w-full">
-            <ChatBody
-              activeChatRoomId={activeChat!}
-              currentUserId={user?._id!}
-              messages={messages}
-              socket={socket!}
-            />
+
+          {/* Chat Body */}
+          <div className="w-full flex-1 overflow-hidden">
+            {activeChat ? (
+              <ChatBody
+                activeChatRoomId={activeChat}
+                currentUserId={user?._id!}
+                messages={messages}
+                socket={socket!}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-500">
+                <p className="text-center px-4">
+                  {isMobile
+                    ? "Tap the menu to select a chat"
+                    : "Select a chat to start messaging"}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

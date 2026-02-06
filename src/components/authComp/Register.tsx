@@ -114,7 +114,7 @@ function SignUp({ toggle }: signUpProps): ReactNode {
             setUser({ ...user!, bio: e.target.value })
           }
           placeholder=" "
-          className="peer border border-gray-300 rounded-xl p-4 w-96 bg-transparent h-40 resize-none focus:outline-none focus:border-black focus:border-2"
+          className="peer border border-gray-300 rounded-xl p-4 w-80 md:w-96 bg-transparent h-40 resize-none focus:outline-none focus:border-black focus:border-2"
         ></textarea>
         <label
           htmlFor=""

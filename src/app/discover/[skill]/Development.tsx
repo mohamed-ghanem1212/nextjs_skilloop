@@ -3,11 +3,12 @@ import Image from "next/image";
 import devImage from "../../../../public/images/development_second.jpg";
 import ShowProviders from "@/components/showProviders/ShowProviders";
 import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
+
 function Development(): ReactNode {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full overflow-hidden">
       <div className="bg-blue-950 flex flex-col lg:flex-row justify-between items-center gap-6 w-full">
-        <div className="w-200 flex flex-col gap-4 px-9">
+        <div className="max-w-2xl flex flex-col gap-4 px-6 md:px-9 py-8">
           <h2 className="text-3xl font-bold mb-2 text-white text-center">
             Build the Technology Behind Ideas
           </h2>
@@ -18,11 +19,16 @@ function Development(): ReactNode {
             concepts into meaningful digital outcomes.
           </p>
         </div>
-        <div className="w-200 h-full">
-          <Image src={devImage} alt="Development" />
+        <div className="w-full lg:w-1/2 h-full">
+          <Image
+            src={devImage}
+            alt="Development"
+            className="w-full h-auto object-cover"
+          />
         </div>
       </div>
-      <div className="w-200">
+
+      <div className="max-w-5xl w-full px-6">
         <h3 className="text-2xl font-bold mt-10 mb-6 text-center">
           Welcome to the Experts Behind the Section
         </h3>
@@ -34,13 +40,14 @@ function Development(): ReactNode {
           world of development.
         </p>
       </div>
-      <div className="flex flex-col items-center">
-        <div className="space-y-3">
+
+      <div className="flex flex-col items-center w-full px-6">
+        <div className="space-y-3 w-full max-w-7xl">
           <h1 className="font-bold text-xl">Choose Your Learning Provider</h1>
           <ShowProviders />
         </div>
-        <div className="h-0.5 w-[70%] bg-gray-200 m-10"></div>
-        <div className="space-y-3">
+        <div className="h-0.5 w-[70%] max-w-4xl bg-gray-200 m-10"></div>
+        <div className="space-y-3 w-full max-w-7xl">
           <h1 className="font-bold text-xl">Available Skill Requests</h1>
           <ShowSkillOffers />
         </div>
@@ -48,4 +55,5 @@ function Development(): ReactNode {
     </div>
   );
 }
+
 export default Development;

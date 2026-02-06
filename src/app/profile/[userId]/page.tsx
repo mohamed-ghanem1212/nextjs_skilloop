@@ -22,14 +22,12 @@ function Profile(): ReactNode {
         setLoading(true);
         const res = await createUserApi.get(`/getUser/${userId}`);
         setVUser(res.data.user);
-        setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           console.log("STATUS:", err.response?.status);
           console.log("DATA:", err.response?.data);
           toast.error(err.response?.data.message);
           console.log("HEADERS:", err.response?.headers);
-          setLoading(false);
         }
       } finally {
         setLoading(false);
@@ -38,10 +36,14 @@ function Profile(): ReactNode {
     fetchUser();
   }, [userId]);
 
+  if (loading) {
+    return <div className="text-center py-10">Loading profile...</div>;
+  }
+
   return (
-    <div className="flex flex-col bg-gray-200">
-      <div className="flex flex-col p-20 w-full items-center justify-center gap-8">
-        <div className="xl:w-100 xl:h-100 w-80 h-80 overflow-hidden rounded-full bg-border">
+    <div className="flex flex-col bg-gray-200 w-full h-full">
+      <div className="flex flex-col p-6 sm:p-10 lg:p-20 w-full items-center justify-center gap-8">
+        <div className="w-40 h-40 sm:w-60 sm:h-60 xl:w-100 xl:h-100 overflow-hidden rounded-full bg-border shrink-0">
           <Image
             src={vUser?.profilePicture || profilePic}
             alt="Profile Picture"
@@ -51,12 +53,16 @@ function Profile(): ReactNode {
             loading="eager"
           />
         </div>
-        <div className="flex flex-col w-150 gap-5 items-center">
-          <h1 className="font-bold text-4xl xl:text-7xl text-center">
+        <div className="flex flex-col w-full max-w-2xl gap-5 items-center px-4">
+          <h1 className="font-bold text-3xl sm:text-4xl xl:text-7xl text-center">
             {vUser?.username}
           </h1>
-          <h4 className="xl:text-3xl text-xl mb-3">{vUser?.email}</h4>
-          <p className="text-center xl:w-200 w-90">{vUser?.bio}</p>
+          <h4 className="text-lg sm:text-xl xl:text-3xl mb-3 font-semibold text-center">
+            {vUser?.title}
+          </h4>
+          <p className="text-center w-full max-w-3xl text-sm sm:text-base">
+            {vUser?.bio}
+          </p>
         </div>
       </div>
     </div>

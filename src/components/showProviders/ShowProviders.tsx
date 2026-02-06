@@ -16,6 +16,7 @@ import { toast } from "sonner";
 function ShowProviders(): ReactNode {
   const [skills, setSkill] = useState<Skill[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
+
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -23,15 +24,12 @@ function ShowProviders(): ReactNode {
         const res = await createSkillApi.get("/getAllSkills");
         setSkill(res.data.getSkills);
         console.log(res.data);
-
-        setLoading(false);
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           console.log("STATUS:", err.response?.status);
           console.log("DATA:", err.response?.data);
           toast.error(err.response?.data.message);
           console.log("HEADERS:", err.response?.headers);
-          setLoading(false);
         } else {
           console.log("UNEXPECTED:", err);
           toast.error("Something went wrong please try again later");
@@ -42,36 +40,37 @@ function ShowProviders(): ReactNode {
     };
     fetchSkills();
   }, []);
+
   return (
-    <Carousel
-      opts={{
-        align: "start",
-      }}
-      className="w-80 md:w-225 xl:w-360 "
-    >
-      <CarouselContent>
-        {skills.length > 0 ? (
-          skills
-            .filter((skill) => skill.userId !== null)
-            .map((skill) => (
-              <CarouselItem
-                key={skill._id}
-                className="md:basis-1/2 lg:basis-1/3"
-              >
-                <div className="flex items-center justify-center w-full">
+    <div className="flex justify-center w-full">
+      <Carousel
+        opts={{
+          align: "center",
+        }}
+        className="w-full max-w-sm md:max-w-3xl lg:max-w-5xl xl:max-w-7xl"
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {skills.length > 0 ? (
+            skills
+              .filter((skill) => skill.userId !== null)
+              .map((skill) => (
+                <CarouselItem
+                  key={skill._id}
+                  className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 flex justify-center"
+                >
                   <SkillProvider skill={skill} />
-                </div>
-              </CarouselItem>
-            ))
-        ) : (
-          <div className="h-full w-full text-center">
-            <p>No Skills shown</p>
-          </div>
-        )}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+                </CarouselItem>
+              ))
+          ) : (
+            <div className="h-full w-full text-center py-8">
+              <p>No Skills shown</p>
+            </div>
+          )}
+        </CarouselContent>
+        <CarouselPrevious className="xl:flex hidden" />
+        <CarouselNext className="xl:flex hidden" />
+      </Carousel>
+    </div>
   );
 }
 

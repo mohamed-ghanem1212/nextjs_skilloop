@@ -22,7 +22,7 @@ export default function Home(): ReactNode {
         <p className="text-xl md:text-[68px] font-bold leading-tight">
           Tailored skill solutions for modern professionals.
         </p>
-        <div className="flex flex-col md:flex-row gap-7 mt-14 items-center">
+        <div className="flex flex-col md:flex-row gap-7 mt-14 items-center md:px-0 px-5">
           <Button name="Get start" bgColor="bg-black" />
           <p className="text-gray-600 text-center md:text-start text-[15px] md:text-[18px]">
             Unlock your potential and grow your expertise. Master the skills
