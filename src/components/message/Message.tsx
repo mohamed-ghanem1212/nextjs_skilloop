@@ -14,7 +14,7 @@ function MessageBubble({
     <div
       className={`flex w-full px-2 sm:px-4 ${isMe ? "justify-end" : "justify-start"}`}
     >
-      <div className="flex flex-row items-end max-w-[85%] sm:max-w-[75%] md:max-w-[60%] lg:max-w-[50%]">
+      <div className="flex flex-row items-end max-w-[50%] sm:max-w-[75%] md:max-w-[80%] lg:max-w-[50%]">
         {!isMe && (
           <div className="shrink-0 mr-2">
             <Avatar className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9">
@@ -32,7 +32,8 @@ function MessageBubble({
 
         <div
           className={`
-            w-fit max-w-full rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm wrap-break-word
+            w-fit max-w-full rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm
+            message-bubble
             ${
               isMe
                 ? "bg-blue-600 text-white rounded-br-none"

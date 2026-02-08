@@ -157,3 +157,9 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.message-bubble {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  white-space: pre-wrap; /* Preserves line breaks but allows wrapping */
+}

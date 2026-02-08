@@ -20,28 +20,17 @@ function ChatBody({
   socket: Socket;
   activeChatRoomId: string;
 }) {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState("");
   const [isSocketReady, setIsSocketReady] = useState(false);
 
-  // ⭐ Scroll to bottom function
-  const scrollToBottom = () => {
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight;
     }
-  };
-
-  // ⭐ Auto-scroll when messages change or chat room changes
-  useEffect(() => {
-    scrollToBottom();
   }, [messages, activeChatRoomId]);
-
-  // ⭐ Also scroll on initial mount
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
 
   useEffect(() => {
     if (!socket) {
@@ -51,11 +40,9 @@ function ChatBody({
 
     const checkConnection = () => {
       setIsSocketReady(socket.connected);
-      console.log("🔌 ChatBody socket status:", socket.connected);
     };
 
     checkConnection();
-
     socket.on("connect", checkConnection);
     socket.on("disconnect", checkConnection);
 
@@ -66,26 +53,7 @@ function ChatBody({
   }, [socket]);
 
   const sendMessage = () => {
-    if (!socket || !socket.connected) {
-      console.log("❌ Socket not connected");
-      return;
-    }
-
-    if (!activeChatRoomId) {
-      console.log("❌ No active chat room");
-      return;
-    }
-
-    if (!text.trim()) {
-      console.log("❌ Empty message");
-      return;
-    }
-
-    console.log("📤 Sending message:", {
-      room: activeChatRoomId,
-      text: text,
-      sender: currentUserId,
-    });
+    if (!socket?.connected || !activeChatRoomId || !text.trim()) return;
 
     socket.emit(SOCKET_EVENTS.SEND_MESSAGE, activeChatRoomId, text);
     setText("");
@@ -103,9 +71,10 @@ function ChatBody({
   return (
     <div className="relative flex flex-col h-full w-full">
       <div
-        ref={messagesContainerRef} // ⭐ Add ref to container
-        className="flex flex-col overflow-y-scroll px-5 py-7 space-y-7 w-full h-full chat-scroll"
+        ref={messagesContainerRef}
+        className="flex flex-col items-center overflow-y-scroll px-5 py-7 space-y-7 w-full h-full chat-scroll"
       >
+        <div className="grow" />
         {messages.length === 0 ? (
           <div className="text-center text-gray-400 py-10">
             {!activeChatRoomId
@@ -123,7 +92,6 @@ function ChatBody({
             />
           ))
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       <SideBarUsers />
@@ -142,45 +110,18 @@ function ChatBody({
                 ? "Select a chat to start messaging..."
                 : "Type your message here..."
             }
-            className="
-              w-60
-              sm:w-full
-              resize-none
-              overflow-y-auto
-              h-12
-              rounded-[250px]
-              border
-              border-gray-200
-              bg-gray-50
-              px-4
-              py-3
-              text-sm
-              text-gray-800
-              placeholder:text-gray-400
-              focus:outline-none
-              focus:ring-2
-              focus:ring-gray-300
-              focus:border-transparent
-              shadow-sm
-              overflow-hidden
-              transition
-              disabled:opacity-50
-              disabled:cursor-not-allowed
-            "
+            className="w-60 sm:w-full resize-none h-12 rounded-[250px] border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isInputDisabled}
           />
 
           <div
-            className={`
-              p-3 rounded-full cursor-pointer duration-200
-              ${
-                !text.trim() || isInputDisabled
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-blue-700 hover:bg-blue-500"
-              }
-            `}
+            className={`p-3 rounded-full cursor-pointer duration-200 ${
+              !text.trim() || isInputDisabled
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-700 hover:bg-blue-500"
+            }`}
             onClick={sendMessage}
           >
             <SendHorizonalIcon className="text-white w-full h-full" />
