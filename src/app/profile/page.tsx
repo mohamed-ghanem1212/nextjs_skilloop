@@ -8,15 +8,15 @@ import CreateSkill from "@/components/createSkill/CreateSkill";
 import { useAuth } from "@/context/authContext";
 import axios from "axios";
 import ProposalContainer from "@/components/proposalContainer/ProposalContainer";
+import UnAuthUser from "@/components/unauthUser/UnAuthUser";
 
 function Profile(): ReactNode {
   const { user, loading } = useAuth();
 
   if (loading)
     return <div className="text-center py-10">Loading profile...</div>;
-  console.log(user?.email);
 
-  if (!user) return <div className="text-center py-10">User not logged in</div>;
+  if (!user) return <UnAuthUser />;
 
   return (
     <div className="flex flex-col bg-gray-200 w-full">
