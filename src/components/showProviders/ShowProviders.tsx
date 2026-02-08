@@ -64,13 +64,13 @@ function ShowProviders({ skillSection }: { skillSection: SECTION }): ReactNode {
               ))
           ) : (
             <div className="flex flex-row gap-7 justify-center h-full w-full py-8">
-              <div className="flex justify-center">
+              <div className="flex justify-center w-full max-w-70 xl:max-w-90">
                 <SkeletonCard />
               </div>
-              <div className="hidden md:flex justify-center">
+              <div className="hidden md:flex justify-center w-full max-w-70 xl:max-w-90">
                 <SkeletonCard />
               </div>
-              <div className="hidden lg:flex justify-center">
+              <div className="hidden lg:flex justify-center w-full max-w-70 xl:max-w-90">
                 <SkeletonCard />
               </div>
             </div>
