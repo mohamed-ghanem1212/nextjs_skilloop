@@ -6,9 +6,9 @@ import Button from "@/components/button/Button";
 import Link from "next/link";
 export default function Home(): ReactNode {
   return (
-    <div className="flex flex-col md:flex-row gap-5 md:gap-0 justify-center xl:px-20 xl:m-20">
-      <div className="md:w-[50%] text-center md:text-start w-full xl:items-start items-center flex flex-col">
-        <div className="md:hidden mb-5">
+    <div className="flex flex-col xl:flex-row gap-5 md:gap-0 justify-center xl:px-20 xl:m-20">
+      <div className="xl:w-1/2 text-center md:text-start w-full xl:items-start items-center flex flex-col">
+        <div className="xl:hidden mb-5">
           <Image
             src={pic}
             alt=""
@@ -20,10 +20,10 @@ export default function Home(): ReactNode {
         <h1 className="text-3xl text-blue-700 font-bold mb-6">
           Reach new skills
         </h1>
-        <p className="text-xl md:text-[68px] font-bold leading-tight">
+        <p className="text-xl xl:text-[68px] font-bold leading-tight">
           Tailored skill solutions for modern professionals.
         </p>
-        <div className="flex flex-col md:flex-row gap-7 mt-14 items-center md:px-0 px-5">
+        <div className="flex flex-col xl:flex-row gap-7 mt-14 items-center md:px-0 px-5">
           <Link href="/home">
             <Button name="Get start" bgColor="bg-black" />
           </Link>
@@ -33,7 +33,7 @@ export default function Home(): ReactNode {
           </p>
         </div>
       </div>
-      <div className="hidden md:block ">
+      <div className="hidden xl:block ">
         <Image
           src={pic}
           alt=""
