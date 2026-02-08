@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MessageData } from "../../../.next/dev/types/message";
+import { MessageData } from "../../types.entities/message";
 
 function MessageBubble({
   messages,

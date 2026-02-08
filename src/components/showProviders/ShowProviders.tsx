@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/carousel";
 import { ReactNode, useEffect, useState } from "react";
 import SkillProvider from "../skillProvider/SkillProvider";
-import { Skill } from "../../../.next/dev/types/skillData.types";
+import { SECTION, Skill } from "../../types.entities/skillData.types";
 import { createSkillApi } from "@/lib/skill.axios";
 import axios from "axios";
 import { toast } from "sonner";
 
-function ShowProviders(): ReactNode {
+function ShowProviders({ skillSection }: { skillSection: SECTION }): ReactNode {
   const [skills, setSkill] = useState<Skill[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
 
@@ -21,17 +21,17 @@ function ShowProviders(): ReactNode {
     const fetchSkills = async () => {
       try {
         setLoading(true);
-        const res = await createSkillApi.get("/getAllSkills");
-        setSkill(res.data.getSkills);
-        console.log(res.data);
+        const res = await createSkillApi.get(
+          `/getSkillsBySection?section=${skillSection}`,
+        );
+
+        setSkill(res.data.skills);
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
-          console.log("STATUS:", err.response?.status);
-          console.log("DATA:", err.response?.data);
           toast.error(err.response?.data.message);
-          console.log("HEADERS:", err.response?.headers);
         } else {
-          console.log("UNEXPECTED:", err);
+          setLoading(false);
+
           toast.error("Something went wrong please try again later");
         }
       } finally {
@@ -47,9 +47,9 @@ function ShowProviders(): ReactNode {
         opts={{
           align: "center",
         }}
-        className="w-full max-w-sm md:max-w-3xl lg:max-w-5xl xl:max-w-7xl"
+        className="w-full max-w-sm md:max-w-3xl lg:max-w-5xl xl:max-w-330"
       >
-        <CarouselContent className="-ml-2 md:-ml-4">
+        <CarouselContent className="-ml-2 md:-ml-4 py-7">
           {skills.length > 0 ? (
             skills
               .filter((skill) => skill.userId !== null)

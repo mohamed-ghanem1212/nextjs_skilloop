@@ -3,6 +3,7 @@ import Image from "next/image";
 import devImage from "../../../../public/images/development_second.jpg";
 import ShowProviders from "@/components/showProviders/ShowProviders";
 import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
+import { SECTION } from "../../../types.entities/skillData.types";
 
 function Development(): ReactNode {
   return (
@@ -42,14 +43,14 @@ function Development(): ReactNode {
       </div>
 
       <div className="flex flex-col items-center w-full px-6">
-        <div className="space-y-3 w-full max-w-7xl">
+        <div className="space-y-3 w-full max-w-350">
           <h1 className="font-bold text-xl">Choose Your Learning Provider</h1>
-          <ShowProviders />
+          <ShowProviders skillSection={SECTION.DEVELOPMENT} />
         </div>
         <div className="h-0.5 w-[70%] max-w-4xl bg-gray-200 m-10"></div>
-        <div className="space-y-3 w-full max-w-7xl">
+        <div className="space-y-3 w-full max-w-350">
           <h1 className="font-bold text-xl">Available Skill Requests</h1>
-          <ShowSkillOffers />
+          <ShowSkillOffers offerSection={SECTION.DEVELOPMENT} />
         </div>
       </div>
     </div>

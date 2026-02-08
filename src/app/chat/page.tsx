@@ -12,7 +12,7 @@ import { Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { connectSocket, disconnectSocket } from "@/lib/socket.io";
 import { SOCKET_EVENTS } from "@/lib/events/events";
-import { MessageData } from "../../../.next/dev/types/message";
+import { MessageData } from "../../../src/types.entities/message";
 import { useAuth } from "@/context/authContext";
 import { Socket } from "socket.io-client";
 import { toast } from "sonner";

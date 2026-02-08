@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import Image from "next/image";
-import logo from "../../public/images/255893252_d184c32b-9410-4627-881c-e3db80456315.svg";
+import logo from "../../public/images/Skilloop logo.svg";
 function Footer(): ReactNode {
   return (
     <footer className="w-full p-16 text-center">
@@ -13,19 +13,17 @@ function Footer(): ReactNode {
           Turning talent into opportunity.
         </h5>
       </div>
-      <div className="flex flex-col md:flex-row justify-between gap-10 w-full p-10 text-center">
-        <div className="flex flex-row items-center cursor-pointer">
-          <Link href={"home"}>
-            <Image
-              src={logo}
-              alt=""
-              className="object-cover"
-              width={200}
-              height={200}
-            />
-          </Link>
-          <h3 className="text-2xl font-bold">Skilloop</h3>
-        </div>
+      <div className="flex flex-col md:flex-row justify-between gap-10 w-full p-10 text-center items-center">
+        <Link href={"home"}>
+          <Image
+            src={logo}
+            alt=""
+            className="object-cover"
+            width={200}
+            height={200}
+          />
+        </Link>
+
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">Platform</h1>
           <div className="flex flex-col mt-3 gap-5">

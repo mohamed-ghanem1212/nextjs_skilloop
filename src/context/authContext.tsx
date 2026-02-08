@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { createUserApi } from "@/lib/user.axios";
-import { User } from "../../.next/dev/types/user.types";
+import { User } from "../types.entities/user.types";
 
 type AuthContextType = {
   user: User | null;

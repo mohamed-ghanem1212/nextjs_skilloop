@@ -1,17 +1,16 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
-import devImage from "../../../public/images/2148514859.jpg";
+import devImage from "../../../public/images/download (8).jpg";
 import ReadMoreText from "../ReadText/ReadText";
 
 import axios from "axios";
-import { Skill } from "../../../.next/dev/types/skillData.types";
+import { Skill } from "../../types.entities/skillData.types";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 import { createChatRoomApi } from "@/lib/chatRoom.axios";
 import { toast } from "sonner";
-import { ChatRoom } from "../../../.next/dev/types/chatRoom.types";
-import { Provider } from "@radix-ui/react-tooltip";
+import { ChatRoom } from "../../types.entities/chatRoom.types";
 import { useRouter } from "next/navigation";
 
 function SkillProvider({ skill }: { skill: Skill }): ReactNode {
@@ -48,8 +47,8 @@ function SkillProvider({ skill }: { skill: Skill }): ReactNode {
     }
   };
   return (
-    <div className=" flex flex-col items-center self-start p-3 border rounded-xl m-5 w-87 xl:w-100 hover:shadow-lg duration-200 hover:bg-gray-200 cursor-pointer hover:scale-105 select-none justify-between">
-      <div className="w-64 xl:w-full overflow-hidden rounded-xl h-60 shrink-0 mb-5">
+    <div className="flex flex-col w-full max-w-100 h-full p-3 border rounded-xl hover:shadow-lg duration-200 hover:bg-gray-200 cursor-pointer hover:scale-105 select-none">
+      <div className="w-full overflow-hidden rounded-xl h-60 shrink-0 mb-5">
         <Image
           width={500}
           height={500}
@@ -59,33 +58,44 @@ function SkillProvider({ skill }: { skill: Skill }): ReactNode {
           loading="eager"
         />
       </div>
-      <div className="flex flex-col w-full px-4">
-        <h4 className="text-sm font-bold line-clamp-2">{skill.skill}</h4>
-        <div className="flex flex-col h-full items-start w-full py-3 gap-3 justify-between">
-          <div className="flex flex-row w-full items-center">
-            <p className="text-[10px] font-medium line-clamp-3">
-              by:{" "}
-              <Link
-                className="hover:underline"
-                href={
-                  user?._id !== skill.userId._id
-                    ? `/profile/${skill.userId._id}`
-                    : `/profile`
-                }
-              >
-                <strong className="text-[12px] hover:underline">
-                  {skill.userId.username}
-                </strong>
-              </Link>
+
+      <div className="flex flex-col flex-1 w-full px-4 h-full">
+        <h4 className="text-sm font-bold line-clamp-2 mb-3">{skill.skill}</h4>
+
+        <div className="flex flex-col flex-1 items-start w-full justify-between">
+          <div className="flex flex-col h-full">
+            <div className="flex flex-row w-full items-center mb-3">
+              <p className="text-[10px] font-medium">
+                by:{" "}
+                <Link
+                  className="hover:underline"
+                  href={
+                    user?._id !== skill.userId._id
+                      ? `/profile/${skill.userId._id}`
+                      : `/profile`
+                  }
+                >
+                  <strong className="text-[12px] hover:underline">
+                    {skill.userId.username}
+                  </strong>
+                </Link>
+              </p>
+              <span className="text-[10px] font-medium mx-2">|</span>
+              <p className="text-[10px] font-medium">4.8 ⭐ (1.2k Reviews)</p>
+            </div>
+            <p
+              className={`text-gray-600 text-[13px] ${!skill.description ? "line-clamp-1" : !skill.description.length ? "line-clamp-1" : "line-clamp-3"}`}
+            >
+              {skill.description}
             </p>
-            <span className="text-[10px] font-medium mx-2">|</span>
-            <p className="text-[10px] font-medium">4.8 ⭐ (1.2k Reviews)</p>
           </div>
-          <ReadMoreText
-            title="Contact"
-            text={skill.description}
-            onClick={handleCreateChatRoom}
-          />
+          <div className="flex-1 flex flex-col justify-between w-full">
+            <ReadMoreText
+              title="Contact"
+              text={skill.description}
+              onClick={handleCreateChatRoom}
+            />
+          </div>
         </div>
       </div>
     </div>

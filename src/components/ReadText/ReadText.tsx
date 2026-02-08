@@ -26,10 +26,7 @@ export default function ReadMoreText({
 
   return (
     <div className="relative w-full">
-      <p className={`text-gray-600 text-[13px] ${!open ? "line-clamp-3" : ""}`}>
-        {text}
-      </p>
-      <div className="flex flex-row justify-between items-center mt-3">
+      <div className="flex flex-row justify-between items-center mt-3 w-full">
         <HoverCard>
           <HoverCardTrigger>
             <button className="mt-2 text-sm font-medium text-blue-600 hover:underline cursor-pointer">
@@ -38,16 +35,18 @@ export default function ReadMoreText({
           </HoverCardTrigger>
           <HoverCardContent className="font-bold">{text}</HoverCardContent>
         </HoverCard>
-        {title == "Register" ? (
-          <CreateRegister title={title} offerId={offerId!} />
-        ) : (
-          <Button
-            className="bg-blue-700 rounded-full text-white hover:bg-blue-900 duration-150 cursor-pointer"
-            onClick={onClick}
-          >
-            {title}
-          </Button>
-        )}
+        <div>
+          {title == "Register" ? (
+            <CreateRegister title={title} offerId={offerId!} />
+          ) : (
+            <Button
+              className="bg-blue-700 rounded-full text-white hover:bg-blue-900 duration-150 cursor-pointer"
+              onClick={onClick}
+            >
+              {title}
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

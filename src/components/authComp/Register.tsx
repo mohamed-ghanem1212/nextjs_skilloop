@@ -5,7 +5,7 @@ import Input from "../input/Input";
 import { lvl, sections, SelectSection } from "../selection/Selection";
 import axios, { AxiosError } from "axios";
 import preview1 from "../../../public/images/2201_w020_n001_1251a_p30_1251.jpg";
-import { User } from "../../../.next/dev/types/user.types";
+import { User } from "../../types.entities/user.types";
 import { useRouter } from "next/navigation";
 import { createUserApi } from "@/lib/user.axios";
 import { useAuth } from "@/context/authContext";

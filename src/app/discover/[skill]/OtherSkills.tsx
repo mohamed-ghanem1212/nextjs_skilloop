@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import Other from "../../../../public/images/skill.jpg";
 import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
+import { SECTION } from "../../../types.entities/skillData.types";
 function OtherSkills(): ReactNode {
   return (
     <div className="flex flex-col items-center">
@@ -35,14 +36,14 @@ function OtherSkills(): ReactNode {
         </p>
       </div>
       <div className="flex flex-col items-center w-full px-6">
-        <div className="space-y-3 w-full max-w-7xl">
+        <div className="space-y-3 w-full max-w-350">
           <h1 className="font-bold text-xl">Choose Your Learning Provider</h1>
-          <ShowProviders />
+          <ShowProviders skillSection={SECTION.OTHER} />
         </div>
         <div className="h-0.5 w-[70%] max-w-4xl bg-gray-200 m-10"></div>
-        <div className="space-y-3 w-full max-w-7xl">
+        <div className="space-y-3 w-full max-w-350">
           <h1 className="font-bold text-xl">Available Skill Requests</h1>
-          <ShowSkillOffers />
+          <ShowSkillOffers offerSection={SECTION.OTHER} />
         </div>
       </div>
     </div>

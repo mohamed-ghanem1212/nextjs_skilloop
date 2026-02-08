@@ -6,9 +6,9 @@ import React from "react";
 import { createChatRoomApi } from "@/lib/chatRoom.axios";
 import axios from "axios";
 import { toast } from "sonner";
-import { User } from "../../../.next/dev/types/user.types";
+import { User } from "../../types.entities/user.types";
 import { useRouter } from "next/navigation";
-import { ChatRoom } from "../../../.next/dev/types/chatRoom.types";
+import { ChatRoom } from "../../types.entities/chatRoom.types";
 type CloseButtonProps = {
   onClose: () => void;
   providers: never[];

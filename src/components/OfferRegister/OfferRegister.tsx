@@ -27,12 +27,12 @@ import { Label } from "@/components/ui/label";
 import { lvl, sections, SelectSection } from "../selection/Selection";
 import { createSkillOfferApi } from "@/lib/skillOffer.axios";
 import axios from "axios";
-import { Registeration } from "../../../.next/dev/types/offerRegister.types";
+import { Registeration } from "../../types.entities/offerRegister.types";
 import { createOfferRegisterApi } from "@/lib/register.axios";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import { useAuth } from "@/context/authContext";
-import { statusEnum } from "../../../.next/dev/types/skills.types";
+import { statusEnum } from "../../types.entities/skills.types";
 import { useRouter } from "next/navigation";
 
 function CreateRegister({

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import creativity from "../../../../public/images/art&design.jpg";
 import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
+import { SECTION } from "../../../types.entities/skillData.types";
+
 function Creativity(): ReactNode {
   return (
     <div className="flex flex-col items-center">
@@ -23,15 +25,28 @@ function Creativity(): ReactNode {
           <Image src={creativity} alt="Creativity" />
         </div>
       </div>
+      <div className="max-w-5xl w-full px-6">
+        <h3 className="text-2xl font-bold mt-10 mb-6 text-center">
+          Welcome to the Experts Behind the Section
+        </h3>
+        <p className="text-center mb-10">
+          Here, experienced developers share their knowledge, guiding you
+          through the intricacies of coding, software design, and technology
+          implementation. Whether you're a beginner or looking to enhance your
+          skills, our providers are here to help you navigate the ever-evolving
+          world of development.
+        </p>
+      </div>
+
       <div className="flex flex-col items-center w-full px-6">
-        <div className="space-y-3 w-full max-w-7xl">
+        <div className="space-y-3 w-full max-w-350">
           <h1 className="font-bold text-xl">Choose Your Learning Provider</h1>
-          <ShowProviders />
+          <ShowProviders skillSection={SECTION.ART_DESIGN} />
         </div>
         <div className="h-0.5 w-[70%] max-w-4xl bg-gray-200 m-10"></div>
-        <div className="space-y-3 w-full max-w-7xl">
+        <div className="space-y-3 w-full max-w-350">
           <h1 className="font-bold text-xl">Available Skill Requests</h1>
-          <ShowSkillOffers />
+          <ShowSkillOffers offerSection={SECTION.ART_DESIGN} />
         </div>
       </div>
     </div>

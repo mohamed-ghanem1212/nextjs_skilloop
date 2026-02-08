@@ -3,6 +3,7 @@ import Register from "@/components/authComp/Register";
 import { ReactNode } from "react";
 import pic from "../../public/images/13450332_OrgCoral_Ofc-02_Concept-04.jpg";
 import Button from "@/components/button/Button";
+import Link from "next/link";
 export default function Home(): ReactNode {
   return (
     <div className="flex flex-col md:flex-row gap-5 md:gap-0 justify-center xl:px-20 xl:m-20">
@@ -23,7 +24,9 @@ export default function Home(): ReactNode {
           Tailored skill solutions for modern professionals.
         </p>
         <div className="flex flex-col md:flex-row gap-7 mt-14 items-center md:px-0 px-5">
-          <Button name="Get start" bgColor="bg-black" />
+          <Link href="/home">
+            <Button name="Get start" bgColor="bg-black" />
+          </Link>
           <p className="text-gray-600 text-center md:text-start text-[15px] md:text-[18px]">
             Unlock your potential and grow your expertise. Master the skills
             that set you apart and elevate your career.

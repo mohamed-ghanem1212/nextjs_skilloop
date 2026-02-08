@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { lvl, sections, SelectSection } from "../selection/Selection";
-import { SkillOfferT } from "../../../.next/dev/types/skills.types";
+import { SkillOfferT } from "../../types.entities/skills.types";
 import { createSkillOfferApi } from "@/lib/skillOffer.axios";
 import axios from "axios";
 import { Textarea } from "../ui/textarea";
@@ -132,9 +132,9 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
       <div className="grid gap-3">
         <Label>Skill</Label>
         <Input
+          placeholder="Enter your skill request..."
           type="text"
           id="skill"
-          defaultValue="..."
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setSkillOffer({ ...skillOffer!, wantSkill: e.target.value })
           }
@@ -143,6 +143,7 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
       <div className="grid gap-3">
         <Label htmlFor="email">Description</Label>
         <Textarea
+          placeholder="Describe to providers what you need..."
           className="resize-none overflow-y-auto h-18"
           id="descrip"
           defaultValue=""

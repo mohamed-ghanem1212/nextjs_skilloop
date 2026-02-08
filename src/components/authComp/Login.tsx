@@ -5,7 +5,7 @@ import { createUserApi } from "@/lib/user.axios";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { User } from "../../../.next/dev/types/user.types";
+import { User } from "../../types.entities/user.types";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 type LoginProps = {

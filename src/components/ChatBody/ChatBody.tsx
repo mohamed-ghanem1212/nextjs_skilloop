@@ -7,7 +7,7 @@ import { Textarea } from "../ui/textarea";
 import { Camera, GalleryHorizontal, SendHorizonalIcon } from "lucide-react";
 import SideBarUsers from "../sideUsers/SideBarUsers";
 
-import { MessageData } from "../../../.next/dev/types/message";
+import { MessageData } from "../../types.entities/message";
 import { Socket } from "socket.io-client";
 import { SOCKET_EVENTS } from "@/lib/events/events";
 

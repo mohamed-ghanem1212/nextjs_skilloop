@@ -28,12 +28,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Skill } from "../../../.next/dev/types/skillData.types";
+import { Skill } from "../../types.entities/skillData.types";
 import Proposal_Details from "../proposal/Proposal_Details";
 import { createOfferRegisterApi } from "@/lib/register.axios";
 import axios from "axios";
 import { toast } from "sonner";
-import { Registeration } from "../../../.next/dev/types/offerRegister.types";
+import { Registeration } from "../../types.entities/offerRegister.types";
 function CreateSkill() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [drawerOpen, setDrawerOpen] = React.useState(false);

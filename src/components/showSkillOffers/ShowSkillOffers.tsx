@@ -11,16 +11,23 @@ import {
 import { createSkillOfferApi } from "@/lib/skillOffer.axios";
 import React from "react";
 import axios from "axios";
-import { SkillOfferT } from "../../../.next/dev/types/skills.types";
+import { SkillOfferT } from "../../types.entities/skills.types";
 import SkillOffer from "../SkillOffer/SkillOffer";
+import { SECTION } from "@/types.entities/skillData.types";
 
-function ShowSkillOffers(): ReactNode {
+function ShowSkillOffers({
+  offerSection,
+}: {
+  offerSection: SECTION;
+}): ReactNode {
   const [offers, setOffers] = React.useState<SkillOfferT[]>([]);
   const [loading, setLoading] = React.useState<Boolean>(false);
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const res = await createSkillOfferApi.get("/getAllSkillOffers");
+        const res = await createSkillOfferApi.get(
+          `/getSkillOffersBySection?section=${offerSection}`,
+        );
         setLoading(true);
         setOffers(res.data.skillOffers);
         console.log(res.data.skillOffers);
@@ -46,25 +53,23 @@ function ShowSkillOffers(): ReactNode {
         opts={{
           align: "center",
         }}
-        className="w-full max-w-sm md:max-w-3xl lg:max-w-5xl xl:max-w-7xl"
+        className="w-full max-w-sm md:max-w-3xl lg:max-w-5xl xl:max-w-330"
       >
-        <CarouselContent>
+        <CarouselContent className="-ml-2 md:-ml-4 py-7">
           {offers.length > 0 ? (
             offers
               .filter((offer) => offer.userId !== null)
-              .map((offer: SkillOfferT) => (
+              .map((offer) => (
                 <CarouselItem
                   key={offer._id}
-                  className="md:basis-1/2 lg:basis-1/3"
+                  className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 flex justify-center"
                 >
-                  <div className="flex items-center justify-center w-full">
-                    <SkillOffer offer={offer} />
-                  </div>
+                  <SkillOffer offer={offer} />
                 </CarouselItem>
               ))
           ) : (
-            <div className="h-full w-full text-center">
-              <p>No Offers shown</p>{" "}
+            <div className="h-full w-full text-center py-8">
+              <p>No Offers shown</p>
             </div>
           )}
         </CarouselContent>

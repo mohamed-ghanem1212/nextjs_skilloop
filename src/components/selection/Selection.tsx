@@ -8,8 +8,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChangeEvent } from "react";
-import { SkillLvl } from "../../../.next/dev/types/user.types";
-import { SECTION } from "../../../.next/dev/types/skillData.types";
+import { SkillLvl } from "../../types.entities/user.types";
+import { SECTION } from "../../types.entities/skillData.types";
 type SelectOption<T extends string> = {
   label: string;
   value: T;

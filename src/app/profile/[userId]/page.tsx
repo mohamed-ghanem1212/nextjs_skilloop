@@ -6,7 +6,7 @@ import { useAuth } from "@/context/authContext";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { createUserApi } from "@/lib/user.axios";
-import { User } from "../../../../.next/dev/types/user.types";
+import { User } from "../../../types.entities/user.types";
 import { toast } from "sonner";
 
 function Profile(): ReactNode {

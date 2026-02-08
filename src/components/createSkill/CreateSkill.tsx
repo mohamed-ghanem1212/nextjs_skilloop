@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { lvl, sections, SelectSection } from "../selection/Selection";
-import { Skill } from "../../../.next/dev/types/skillData.types";
+import { Skill } from "../../types.entities/skillData.types";
 import axios from "axios";
 import { createSkillApi } from "@/lib/skill.axios";
 import { Textarea } from "../ui/textarea";
