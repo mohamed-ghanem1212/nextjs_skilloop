@@ -14,6 +14,7 @@ import axios from "axios";
 import { SkillOfferT } from "../../types.entities/skills.types";
 import SkillOffer from "../SkillOffer/SkillOffer";
 import { SECTION } from "@/types.entities/skillData.types";
+import { SkeletonText } from "../skeletonText/SkeletonText";
 
 function ShowSkillOffers({
   offerSection,
@@ -68,8 +69,10 @@ function ShowSkillOffers({
                 </CarouselItem>
               ))
           ) : (
-            <div className="h-full w-full text-center py-8">
-              <p>No Offers shown</p>
+            <div className=" flex flex-row gap-7 h-full w-full text-center py-8 justify-center">
+              {Array.from({ length: 3 }, (_, index) => (
+                <SkeletonText key={index} />
+              ))}
             </div>
           )}
         </CarouselContent>

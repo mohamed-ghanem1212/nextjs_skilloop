@@ -88,11 +88,8 @@ function ChatBody({
   const isInputDisabled = !socket || !isSocketReady || !activeChatRoomId;
 
   return (
-    <div className="relative flex flex-col h-200 w-full">
-      <div
-        className="flex flex-col overflow-y-scroll px-5 py-7 space-y-7 chat-scroll w-full h-full justify-end"
-        ref={bottomRef}
-      >
+    <div className="relative flex flex-col h-full w-full">
+      <div className="flex flex-col overflow-y-scroll px-5 py-7 space-y-7 w-full h-full chat-scroll">
         {messages.length === 0 ? (
           <div className="text-center text-gray-400 py-10">
             {!activeChatRoomId

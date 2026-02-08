@@ -95,7 +95,10 @@ function NavRes({ isOpen, setIsOpened }: NavResProps): ReactNode {
           Chat Room
         </Link>
         <Link
-          onClick={handleLogOutUser}
+          onClick={() => {
+            setIsOpened(false);
+            handleLogOutUser;
+          }}
           href={"/auth"}
           className={`hover:text-blue-700 duration-200`}
         >

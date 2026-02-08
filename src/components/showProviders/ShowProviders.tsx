@@ -12,6 +12,7 @@ import { SECTION, Skill } from "../../types.entities/skillData.types";
 import { createSkillApi } from "@/lib/skill.axios";
 import axios from "axios";
 import { toast } from "sonner";
+import { SkeletonCard } from "../skeletonCard/SkeletonCard";
 
 function ShowProviders({ skillSection }: { skillSection: SECTION }): ReactNode {
   const [skills, setSkill] = useState<Skill[]>([]);
@@ -62,8 +63,10 @@ function ShowProviders({ skillSection }: { skillSection: SECTION }): ReactNode {
                 </CarouselItem>
               ))
           ) : (
-            <div className="h-full w-full text-center py-8">
-              <p>No Skills shown</p>
+            <div className="flex flex-row gap-7 justify-center h-full w-full py-8">
+              {Array.from({ length: 3 }, (_, index) => (
+                <SkeletonCard key={index} />
+              ))}
             </div>
           )}
         </CarouselContent>

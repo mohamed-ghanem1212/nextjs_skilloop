@@ -2,9 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   compiler: {
-    // removeConsole: {
-    //   exclude: ["error", "warn"],
-    // },
+    removeConsole: {
+      exclude: ["error", "warn"],
+    },
   },
   images: {
     remotePatterns: [

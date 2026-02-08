@@ -8,7 +8,7 @@ type card = {
 };
 function Card({ name, img, description }: card): ReactNode {
   return (
-    <div className="flex flex-row xl:gap-14 gap-5 border border-gray-400 rounded-4xl md:p-11 p-7 m-5 md:mx-10 xl:w-full w-80">
+    <div className="flex flex-row xl:gap-14 gap-5 border border-gray-400 rounded-4xl md:p-11 p-7 m-5 md:mx-10 xl:w-full md:w-150 w-80">
       <Quote width={200} height={100} />
       <div className="flex flex-col py-5 gap-10">
         <p className="text-md md:text-3xl">{description}</p>

@@ -35,11 +35,11 @@ function page(): ReactNode {
               src={share}
               alt=""
               className="object-cover select-none"
-              width={400}
-              height={400}
+              width={450}
+              height={450}
             />
           </div>
-          <p className="text-xl xl:text-[68px] font-bold leading-tight text-center lg:text-start">
+          <p className="text-xl xl:text-[45px] font-bold leading-tight text-center lg:text-start">
             Offer your skills, create learning experiences, and reach people who
             need them.
           </p>
