@@ -29,7 +29,10 @@ function NavRes({ isOpen, setIsOpened }: NavResProps): ReactNode {
         console.log("STATUS:", err.response?.status);
         console.log("DATA:", err.response?.data);
         console.log("HEADERS:", err.response?.headers);
-        toast.success(err.response?.data.message);
+        toast.error(
+          err.response?.data.message ||
+            "Failed to log out, please try again later",
+        );
       } else {
         console.log("UNEXPECTED:", err);
       }

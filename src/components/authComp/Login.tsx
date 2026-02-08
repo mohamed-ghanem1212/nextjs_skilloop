@@ -40,7 +40,10 @@ function Login({ toggle }: LoginProps): ReactNode {
       if (axios.isAxiosError(err)) {
         console.log("STATUS:", err.response?.status);
         console.log("DATA:", err.response?.data);
-        toast.error(err.response?.data.message);
+        toast.error(
+          err.response?.data.message ||
+            "Failed to log in, please try again later",
+        );
         console.log("HEADERS:", err.response?.headers);
       } else {
         toast.error("Something went wrong please try again later");

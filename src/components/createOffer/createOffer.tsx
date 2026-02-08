@@ -117,7 +117,10 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
         console.log("STATUS:", err.response?.status);
         console.log("DATA:", err.response?.data);
         console.log("HEADERS:", err.response?.headers);
-        toast.error(err.response?.data.message);
+        toast.error(
+          err.response?.data.message ||
+            "Something went wrong please try again later",
+        );
         setLoading(false);
       } else {
         console.log("UNEXPECTED:", err);

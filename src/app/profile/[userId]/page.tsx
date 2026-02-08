@@ -26,7 +26,7 @@ function Profile(): ReactNode {
         if (axios.isAxiosError(err)) {
           console.log("STATUS:", err.response?.status);
           console.log("DATA:", err.response?.data);
-          toast.error(err.response?.data.message);
+          toast.error(err.response?.data.message || "please try again later");
           console.log("HEADERS:", err.response?.headers);
         }
       } finally {
