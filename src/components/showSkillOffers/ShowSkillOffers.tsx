@@ -70,9 +70,15 @@ function ShowSkillOffers({
               ))
           ) : (
             <div className=" flex flex-row gap-7 h-full w-full text-center py-8 justify-center">
-              {Array.from({ length: 3 }, (_, index) => (
-                <SkeletonText key={index} />
-              ))}
+              <div className="flex justify-center">
+                <SkeletonText />
+              </div>
+              <div className="hidden md:flex justify-center">
+                <SkeletonText />
+              </div>
+              <div className="hidden lg:flex justify-center">
+                <SkeletonText />
+              </div>
             </div>
           )}
         </CarouselContent>

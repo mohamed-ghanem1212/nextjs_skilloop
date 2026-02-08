@@ -64,9 +64,15 @@ function ShowProviders({ skillSection }: { skillSection: SECTION }): ReactNode {
               ))
           ) : (
             <div className="flex flex-row gap-7 justify-center h-full w-full py-8">
-              {Array.from({ length: 3 }, (_, index) => (
-                <SkeletonCard key={index} />
-              ))}
+              <div className="flex justify-center">
+                <SkeletonCard />
+              </div>
+              <div className="hidden md:flex justify-center">
+                <SkeletonCard />
+              </div>
+              <div className="hidden lg:flex justify-center">
+                <SkeletonCard />
+              </div>
             </div>
           )}
         </CarouselContent>
