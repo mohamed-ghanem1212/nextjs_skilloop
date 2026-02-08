@@ -2,11 +2,9 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 import MessageBubble from "../message/Message";
-
 import { Textarea } from "../ui/textarea";
 import { Camera, GalleryHorizontal, SendHorizonalIcon } from "lucide-react";
 import SideBarUsers from "../sideUsers/SideBarUsers";
-
 import { MessageData } from "../../types.entities/message";
 import { Socket } from "socket.io-client";
 import { SOCKET_EVENTS } from "@/lib/events/events";
@@ -22,9 +20,28 @@ function ChatBody({
   socket: Socket;
   activeChatRoomId: string;
 }) {
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState("");
   const [isSocketReady, setIsSocketReady] = useState(false);
+
+  // ⭐ Scroll to bottom function
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  };
+
+  // ⭐ Auto-scroll when messages change or chat room changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, activeChatRoomId]);
+
+  // ⭐ Also scroll on initial mount
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
   useEffect(() => {
     if (!socket) {
@@ -70,17 +87,13 @@ function ChatBody({
       sender: currentUserId,
     });
 
-    // Emit message through socket
     socket.emit(SOCKET_EVENTS.SEND_MESSAGE, activeChatRoomId, text);
-
-    // Clear input
     setText("");
   };
 
-  // Handle Enter key press
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault(); // Prevent new line
+      e.preventDefault();
       sendMessage();
     }
   };
@@ -89,7 +102,10 @@ function ChatBody({
 
   return (
     <div className="relative flex flex-col h-full w-full">
-      <div className="flex flex-col overflow-y-scroll px-5 py-7 space-y-7 w-full h-full chat-scroll">
+      <div
+        ref={messagesContainerRef} // ⭐ Add ref to container
+        className="flex flex-col overflow-y-scroll px-5 py-7 space-y-7 w-full h-full chat-scroll"
+      >
         {messages.length === 0 ? (
           <div className="text-center text-gray-400 py-10">
             {!activeChatRoomId
@@ -107,8 +123,9 @@ function ChatBody({
             />
           ))
         )}
-        <div />
+        <div ref={messagesEndRef} />
       </div>
+
       <SideBarUsers />
 
       <div className="h-20 w-full px-3 bg-gray-50 flex items-center gap-4">
