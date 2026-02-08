@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const createSkillOfferApi = axios.create({
-  baseURL: "http://localhost:5000/api/v1/skillOffers",
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/skillOffers`,
   withCredentials: true,
 });

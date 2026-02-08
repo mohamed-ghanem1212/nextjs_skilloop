@@ -36,7 +36,7 @@ export const connectSocket = (userId?: string): Socket => {
   // Create new socket instance
   console.log("🆕 Creating new socket instance for user:", userId || "unknown");
 
-  const SOCKET_URL = "http://localhost:5000";
+  const SOCKET_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
   socket = io(SOCKET_URL, {
     autoConnect: true,
