@@ -19,7 +19,7 @@ function Register(): ReactNode {
     <div className="flex flex-col xl:flex-row gap-5 md:gap-8 justify-center xl:gap-12 items-center w-full px-4 sm:px-6 md:px-10 xl:px-20 py-8 xl:py-20 overflow-hidden">
       <div className="flex flex-col xl:w-[50%] text-center md:text-start w-full max-w-2xl items-center">
         {/* Mobile Image */}
-        <div className="md:hidden flex w-full items-center justify-center mb-5">
+        <div className="xl:hidden flex w-full items-center justify-center mb-5">
           <Image
             src={authImg}
             alt="Authentication illustration"
@@ -64,7 +64,7 @@ function Register(): ReactNode {
       </div>
 
       {/* Desktop Image */}
-      <div className="hidden md:flex xl:w-[50%] items-center justify-center">
+      <div className="hidden xl:flex xl:w-[50%] items-center justify-center">
         <Image
           src={authImg}
           alt="Authentication illustration"

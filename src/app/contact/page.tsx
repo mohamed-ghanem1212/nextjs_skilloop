@@ -4,9 +4,9 @@ import contactUs from "../../../public/images/9963615.jpg";
 import Input from "@/components/input/Input";
 function Contact(): ReactNode {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center">
       <div className="flex flex-col xl:flex-row justify-between w-full px-32 py-14 items-center">
-        <div className="flex flex-col w-100 xl:w-100 py-16 items-center xl:items-start">
+        <div className="flex flex-col w-120 xl:w-1/2 py-16 items-center xl:items-start">
           <h1 className="xl:text-7xl text-5xl font-bold mb-6">Talk to Us!</h1>
 
           <p className="text-xl text-center xl:text-start leading-relaxed tracking-wide">
@@ -14,7 +14,7 @@ function Contact(): ReactNode {
             and explore how we can turn your goals into real success.
           </p>
         </div>
-        <div className="w-70 xl:w-full">
+        <div className="w-70 xl:w-1/2">
           <Image src={contactUs} alt="Contact Us" width={700} height={700} />
         </div>
       </div>

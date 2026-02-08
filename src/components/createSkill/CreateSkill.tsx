@@ -125,7 +125,10 @@ function OfferForm({ className, closeForm }: OfferFormProps) {
       if (axios.isAxiosError(err)) {
         console.log("STATUS:", err.response?.status);
         console.log("DATA:", err.response?.data);
-        toast.error(err.response?.data.message);
+        toast.error(
+          err.response?.data.message ||
+            "Something went wrong please try again later",
+        );
         setLoading(false);
         console.log("HEADERS:", err.response?.headers);
       } else {
