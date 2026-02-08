@@ -8,9 +8,9 @@ import { SECTION } from "../../../types.entities/skillData.types";
 
 function Creativity(): ReactNode {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full overflow-hidden">
       <div className="bg-orange-900 flex flex-col lg:flex-row justify-between items-center gap-6 w-full">
-        <div className="w-200 flex flex-col gap-4 px-9">
+        <div className="max-w-2xl flex flex-col gap-4 px-6 md:px-9 py-8">
           <h2 className="text-3xl font-bold mb-2 text-white text-center">
             Create, Design, and Express Visually
           </h2>

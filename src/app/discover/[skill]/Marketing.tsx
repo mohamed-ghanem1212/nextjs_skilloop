@@ -6,9 +6,9 @@ import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
 import { SECTION } from "../../../types.entities/skillData.types";
 function Marketing(): ReactNode {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full overflow-hidden">
       <div className="bg-blue-900 flex flex-col lg:flex-row justify-between items-center gap-6 w-full">
-        <div className="w-200 flex flex-col gap-4 px-9">
+        <div className="max-w-2xl flex flex-col gap-4 px-6 md:px-9 py-8">
           <h2 className="text-3xl font-bold mb-2 text-white text-center">
             Grow Brands and Reach the Right Audience
           </h2>
@@ -19,11 +19,11 @@ function Marketing(): ReactNode {
             engagement, and grow brands in today’s digital world.
           </p>
         </div>
-        <div className="w-200 h-full">
+        <div className="w-full lg:w-1/2 h-full">
           <Image src={marImage} alt="Development" />
         </div>
       </div>
-      <div className="w-200">
+      <div className="max-w-5xl w-full px-6">
         <h3 className="text-2xl font-bold mt-10 mb-6 text-center">
           Welcome to the Experts Behind the Section
         </h3>

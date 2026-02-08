@@ -15,18 +15,18 @@ function Login({ toggle }: LoginProps): ReactNode {
   const { user, setUser, refreshUser } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const handleVerifyUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-
-    formData.append("email", user?.email!);
-    formData.append("password", user?.password!);
-
     try {
       setLoading(true);
-      const res = await createUserApi.post("/signIn", formData, {
-        headers: { "Content-Type": "application/json" },
+      const res = await createUserApi.post("/signIn", {
+        email: formData.email,
+        password: formData.password,
       });
       console.log("Profile updated:", res.data);
       setUser({
@@ -35,7 +35,7 @@ function Login({ toggle }: LoginProps): ReactNode {
       toast.success(res.data.message);
       await refreshUser();
       setLoading(false);
-      router.back();
+      router.push("/profile");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         console.log("STATUS:", err.response?.status);
@@ -59,14 +59,14 @@ function Login({ toggle }: LoginProps): ReactNode {
         inputType="text"
         label="Email"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setUser({ ...user!, email: e.target.value })
+          setFormData({ ...formData, email: e.target.value })
         }
       />
       <Input
         inputType="password"
         label="Password"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setUser({ ...user!, password: e.target.value })
+          setFormData({ ...formData, password: e.target.value })
         }
       />
 

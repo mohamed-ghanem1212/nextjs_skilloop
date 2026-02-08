@@ -21,27 +21,33 @@ function SignUp({ toggle }: signUpProps): ReactNode {
   const [loading, setLoading] = useState<Boolean>(false);
   const { user, setUser, refreshUser } = useAuth();
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    title: "",
+    bio: "",
+  });
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) return alert("please upload your picture");
-    const formData = new FormData();
-    formData.append("username", user?.username!);
-    formData.append("email", user?.email!);
-    formData.append("title", user?.title!);
-    formData.append("password", user?.password!);
-    formData.append("bio", user?.bio!);
-    formData.append("profilePicture", file);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("username", formData.username);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("password", formData.password);
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("bio", formData.bio);
+    if (file) {
+      formDataToSend.append("profilePicture", file);
+    }
 
     try {
       setLoading(true);
-      const res = await createUserApi.post("/newUser", formData, {
+      const res = await createUserApi.post("/newUser", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setUser({
-        ...user!,
-        profilePicture: res.data.profilePicture,
-      });
       await refreshUser();
       toast.success(res.data.message);
       setLoading(false);
@@ -87,34 +93,34 @@ function SignUp({ toggle }: signUpProps): ReactNode {
         inputType="text"
         label="Username"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setUser({ ...user!, username: e.target.value })
+          setFormData({ ...user!, username: e.target.value })
         }
       />
       <Input
         inputType="text"
         label="Email"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setUser({ ...user!, email: e.target.value })
+          setFormData({ ...formData, email: e.target.value })
         }
       />
       <Input
         inputType="text"
         label="Title"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setUser({ ...user!, title: e.target.value })
+          setFormData({ ...formData, title: e.target.value })
         }
       />
       <Input
         inputType="password"
         label="Password"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setUser({ ...user!, password: e.target.value })
+          setFormData({ ...formData, password: e.target.value })
         }
       />
       <div className="relative">
         <textarea
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            setUser({ ...user!, bio: e.target.value })
+            setFormData({ ...formData, bio: e.target.value })
           }
           placeholder=" "
           className="peer border border-gray-300 rounded-xl p-4 w-80 md:w-96 bg-transparent h-40 resize-none focus:outline-none focus:border-black focus:border-2"

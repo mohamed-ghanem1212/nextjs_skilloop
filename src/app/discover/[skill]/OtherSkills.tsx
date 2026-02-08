@@ -6,9 +6,9 @@ import ShowSkillOffers from "@/components/showSkillOffers/ShowSkillOffers";
 import { SECTION } from "../../../types.entities/skillData.types";
 function OtherSkills(): ReactNode {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full overflow-hidden">
       <div className="bg-blue-400 flex flex-col lg:flex-row justify-between items-center gap-6 w-full">
-        <div className="w-200 flex flex-col gap-4 px-9">
+        <div className="max-w-2xl flex flex-col gap-4 px-6 md:px-9 py-8">
           <h2 className="text-3xl font-bold mb-2 text-white text-center">
             Expand Your Knowledge Beyond Boundaries
           </h2>
@@ -19,11 +19,11 @@ function OtherSkills(): ReactNode {
             and continuous growth.
           </p>
         </div>
-        <div className="w-200 h-full">
+        <div className="w-full lg:w-1/2 h-full">
           <Image src={Other} alt="Development" />
         </div>
       </div>
-      <div className="w-200">
+      <div className="max-w-5xl w-full px-6">
         <h3 className="text-2xl font-bold mt-10 mb-6 text-center">
           Welcome to the Experts Behind the Section
         </h3>
