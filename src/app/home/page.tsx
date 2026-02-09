@@ -104,14 +104,16 @@ function page(): ReactNode {
           />
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4 my-28 xl:px-0 w-full px-10">
-        <h1 className="md:text-4xl text-2xl font-bold text-center">
-          See What Our Community Says About Skilloop
-        </h1>
-        <p className="md:text-2xl text-center">
-          Hear from skill providers and learners who’ve already shared, learned,
-          and grown with us.
-        </p>
+      <div className="flex flex-col items-center gap-4 my-28 w-full">
+        <div className="px-10">
+          <h1 className="md:text-4xl text-2xl font-bold text-center">
+            See What Our Community Says About Skilloop
+          </h1>
+          <p className="md:text-2xl text-center">
+            Hear from skill providers and learners who’ve already shared,
+            learned, and grown with us.
+          </p>
+        </div>
         <div className="flex flex-col my-10 mx-10">
           <div className="flex flex-col xl:flex-row">
             <Card
