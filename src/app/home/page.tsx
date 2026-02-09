@@ -104,7 +104,7 @@ function page(): ReactNode {
           />
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4 my-28 xl:px-0">
+      <div className="flex flex-col items-center gap-4 my-28 xl:px-0 w-full px-10">
         <h1 className="md:text-4xl text-2xl font-bold text-center">
           See What Our Community Says About Skilloop
         </h1>
